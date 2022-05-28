@@ -11,10 +11,12 @@ improving heart-health.
 
 Disclaimer
 ----------
-All data, links, figures, and other information on the Cardiovascular Health 
+All data, links, and other information on the Cardiovascular Health 
 Dashboard are compiled from external sources. This is not medical advice. 
 Consult a healthcare professional before incorporating any changes into your
 lifestyle or habits.
+
+All Code is available via the project repository on `GitHub <https://github.com/michaelbaluja/CardiovascularHealthDashboard>`_
 
 
 .. toctree::
