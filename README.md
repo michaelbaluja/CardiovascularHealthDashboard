@@ -25,6 +25,9 @@ pip install -r requirements.txt
 
 ### Use
 
+## Documentation
+The full documentation for the dashboard is available on [Read the Docs](https://cardiovascular-health-dashboard.readthedocs.io/en/latest/)
+
 ## Testing
 To test the program, navigate to the root of the repository and run the following:
 ```bash
