@@ -5,6 +5,7 @@ from dash import html
 from dash import dcc
 import pandas as pd
 import plotly.express as px
+import os
 
 def read_data(filepath):
     return pd.read_csv(filepath)
@@ -191,6 +192,7 @@ def callbacks(_app):
             fig = px.pie(df, values='Data_Value', names='Topic', title='Types of Heart Disease (per 100,000)',
                 width=400, height=375)
             return fig
+
 
 df = read_data('../../data/Trends_heart_disease.csv')
 clean_df(df)

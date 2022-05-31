@@ -86,7 +86,7 @@
 #app-page-content ::-webkit-scrollbar {
     width: 4px;
     height: 0px;
-    background-color: #f6f6f6; /* Change in individual app stylesheet */
+    background-color: rgb(0, 255, 156); /* Change in individual app stylesheet */
 }
 
 #app-page-content ::-webkit-scrollbar-thumb {
