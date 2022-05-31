@@ -33,7 +33,7 @@ layout = html.Div(
                                                 ),
                                     ]),
                                     html.Div(className='app-controls-block', children=[
-                                        html.P("Height(cms)" ),
+                                        html.P("Height (Inches)" ),
                                         dcc.Input(
                                             className='app-input',
                                             id='height',
@@ -55,7 +55,7 @@ layout = html.Div(
                     ]),]),
         html.Div(className='HeartBeat', style={'top':'50%'},children=[
                         html.Div(className='app-controls-block', children=[
-                            html.P("Weight(kgs)" ),
+                            html.P("Weight (Pounds)" ),
                             dcc.Input(
                                 className='app-input',
                                 id='weight',
