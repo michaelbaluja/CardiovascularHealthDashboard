@@ -6,16 +6,16 @@ import json
 
 app = Dash(__name__)
 
-year = 2000
-age = 'Ages 35-64 years'
-topic = 'Stroke'
-
 with urlopen('https://raw.githubusercontent.com/plotly/datasets/master/geojson-counties-fips.json') as response:
     counties = json.load(response)
+#Used for plotting. We can predownload the json if thats better ? 
+
 
 data2 = pd.read_csv("data/trends_by_100k.csv").drop(columns=['Unnamed: 0', 'State', 'County', 'Low_Bound', 'Up_Bound'])
 data2['Topic']=data2['Topic'].astype('string')
 data2['Age']=data2['Age'].astype('string')
+data2['LocationID']=data2['LocationID'].astype('string')
+data2['LocationID']=data2['LocationID'].apply((lambda x: x.zfill(5)))
 
 app.layout = html.Div([
     dcc.Slider(1999, 2018, 1,
@@ -45,7 +45,7 @@ app.layout = html.Div([
     Input('topic', 'value'),
 )
 def correlation_plot(year, age, topic):
-    """Create a map using the three selected topics.
+    """Create a map using the three selected targets.
     """
     x=data2[data2['Year'] == int(year)]
     x=x[x['Topic'] == topic]
