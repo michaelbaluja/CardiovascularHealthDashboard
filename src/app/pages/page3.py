@@ -6,7 +6,10 @@ from utils.validation import _convert_imp_metr_height, _convert_imp_metr_weight
 
 layout = html.Div(
 
-    children=html.Div(children=[html.Div(className='HeartBeat', style={'top': '48%', 'left': '20%'}, children=[
+    children=html.Div(children=[
+    
+        
+        html.Div(className='HeartBeat', style={'top': '48%', 'left': '20%'}, children=[
         html.P("PLEASE FILL OUT THE FOLLOWING DETAILS", style={
                'color': 'rgb(0, 255, 156)', 'font-size': 'x-large'}),
         html.Div(className='app-controls-block', children=[
@@ -107,7 +110,7 @@ layout = html.Div(
         ]),
         html.Div(className='app-controls-block', children=html.Div(className='outer', children=[
             html.Div(className='inner'), html.Div(
-                className="Number", id="predict", children=[])
+                className="Number", id="predict_full", children=[])
         ]
         )),
         dcc.Link(html.Button("Show General Stats", style={

@@ -1,90 +1,257 @@
-from dash import dcc, html, Input, Output, callback
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-import pickle
+from dash import Dash, html, dcc, Input, Output,callback
 import plotly.express as px
+import pandas as pd
+import itertools
+from urllib.request import urlopen
+import json
 import plotly.graph_objects as go
-from pages import page2
+from sklearn.feature_selection import SelectKBest, chi2
 
+app = Dash(__name__)
+##################################1
+CATEGORICAL_COLUMNS = ['gender', 'cholesterol', 'smoke', 'alco', 'active']
+def get_categorical_table()-> pd.DataFrame:
+    """Returns a section of the table with categorical variables only
+    Returns
+    -------
+    pandas.DataFrame
+    """
+    # read the kaggle dataset
+    df = pd.read_csv('models/kaggle_cleaned.csv')
+    return df[[*CATEGORICAL_COLUMNS, 'cardio']]
 
+df = get_categorical_table()
 
-def read_data(filepath):
-    return pd.read_csv(filepath)
+def get_dropdown_options():
+    """Returns all the varibles to populate the dropdown
+    Returns
+    -------
+    list(str)
+    """
+    return CATEGORICAL_COLUMNS
 
-def clean_df(df):
-    '''
-    Cleans dataframe IN PLACE
-    '''
-    assert isinstance(df, pd.DataFrame)
-    
-    df['Data_Value'] = df["Data_Value"].str.replace(",","").astype(float)
-    df.drop('StratificationCategory1', axis=1, inplace=True)
-    df.rename(columns={'Stratification1': 'Age Group', 'LocationAbbr': 'State', 
-                      'LocationDesc': 'County'}, inplace=True)
-df = read_data('../../data/Trends_heart_disease.csv')
-clean_df(df)
+def compute_importance(x_vars) -> list:
+    """Computes the importance score using the chi-squared statistic
+    Input
+    -------
+    x_vars : list of fields for which the importance is computed
+    y : Dependent variable
+    Returns
+    -------
+    list: importance scores for each x with respect to y
+    """
+    #assert isinstance(x_vars, list)
+    #assert all([(isinstance(x, str) and x in df.columns) for x in x_vars])
+    if x_vars!=None:
+        x_df = df[[*x_vars]]
+        y_ds = df['cardio']
 
-state_labels = [{'label' : i, 'value' : i} for i in df['State'].unique()]
-
-layout = html.Div(html.Div(className='app-controls-block', children=[
-                            html.Div(style={'float': 'left'}, children=[
-                                html.P("State", style={'margin-left': '15px'}),
-                                dcc.Dropdown(id = 'general-state',
-                                    options = state_labels,
-                                ),
-                            ]),
-                            html.Div(style={'float': 'left'}, children=[
-                                html.P("County", style={'margin-left': '15px'}),
-                                dcc.Dropdown(id = 'general-county',
-                                    
-                                ),
-                                
-                                html.Br(),
-                                html.Br(),
-                            ]),
-                            #html.Div(html.Button(id='dash-view-submit-data')),
-                            html.Div(
-                            id='dash-view-container',
-                            children=
-                                html.Div(
-                                    id='dash-view-graph-container-1',
-                                    children=
-                                        dcc.Graph(id='pie-plot')
-                                    
-                                ),)
-                            
-                            ]),
-                        
-                                    
-                                )
-
-@callback(Output(component_id='general-county', component_property='options'),
-    Input(component_id='general-state', component_property='value')
-    )
-def update_counties(input_value):
-    return df.groupby('State').get_group(input_value)['County'].unique()
-
-@callback(
-    Output(component_id='pie-plot', component_property='figure'),
+        fs = SelectKBest(score_func=chi2, k='all')
+        fs.fit(x_df, y_ds)
+        return fs.scores_
    
-    [Input(component_id='general-county', component_property='value'),
-    Input(component_id='general-state', component_property='value'),
-    Input(component_id='predict', component_property='number')
-    ]
-    )
-def plot_pie_graph(county_value, state_value,predict):
-    if(state_value==None or county_value==None):
-        labels = ['Select state and county']
-        values = [4500]
-        fig = go.Figure(data=[go.Pie(labels=labels, values=values)])
-        return fig,
-    '''
-    reduced_df = df.groupby(['State', 'County', 'Data_Value_Unit','Topic']).sum().loc[
-        state_value, county_value, 'per 100,000']
-    fig = px.pie(df, values='Data_Value', names='Topic', title='Types of Heart Disease (per 100,000)',
-        width=400, height=375)
-    return fig'''
+
+    
 
 
 
+
+############################################2
+with urlopen('https://raw.githubusercontent.com/plotly/datasets/master/geojson-counties-fips.json') as response:
+    counties = json.load(response)
+#print(data.drop('cardio').index.tolist())
+#This only uses the columns ['smoke', 'gender', 'alco', 'active', 'cardio'] from the kaggle_cleaned.csv
+
+#data
+dataset1=pd.read_csv("../../data/Kagglecleaned3.csv")
+dataset1.loc[dataset1['cardio']==0,'cardio'] = 'No CVD'
+dataset1.loc[dataset1['cardio']==1,'cardio'] = 'CVD patient'
+
+dataset2 = pd.read_csv('../../data/kaggle_cleaned.csv') #for easy use
+dataset2.loc[dataset2['cardio']==0,'cardio'] = 'No CVD'
+dataset2.loc[dataset2['cardio']==1,'cardio'] = 'CVD patient'
+dataset2.loc[dataset2['cholesterol']==1,'cholesterol'] = 'Normal'
+dataset2.loc[dataset2['cholesterol']==2,'cholesterol'] = 'Above Normal'
+dataset2.loc[dataset2['cholesterol']==3,'cholesterol'] = 'Well Above Normal'
+dataset2.loc[dataset2['gluc']==1,'gluc'] = 'Normal'
+dataset2.loc[dataset2['gluc']==2,'gluc'] = 'Above Normal'
+dataset2.loc[dataset2['gluc']==3,'gluc'] = 'Well Above Normal'
+
+#figure for high blood pressure
+fig1 = px.box(dataset1, y = 'ap_hi', x='cardio', color='cardio') 
+fig2 = px.box(dataset1, y = 'ap_lo', x='cardio', color='cardio')
+
+#figure for Smoking (data from heart_2020_cleaned.csv, the other dataset does not show significant relationship on smoking, weird)
+fig3 = go.Figure(data=[go.Table(header=dict(values=['','CVD patient', 'No CVD']),
+                 cells=dict(values=[['Smoker', 'Non-Smoker'],[16037, 11336], [115871, 176551]]))])
+
+#figure for cholesterol
+fig4 = px.histogram(dataset2, x='cardio', color="cholesterol", barmode='group')
+
+#fig for high glucolse
+fig5 = px.histogram(dataset2, x='cardio', color="gluc", barmode='group')
+#fig for Inactivity
+fig6 = px.histogram(dataset1, x='cardio', color="active", barmode='group')
+#fig for Obsease
+dataset1['BMI'] = dataset1['weight']/(dataset1['height']**2)*10000
+dataset1 = dataset1[dataset1['BMI']<50]
+fig7 = px.box(dataset1, y = 'BMI', x='cardio', color='cardio')
+
+
+risk_suggestions = {
+    'High blood Pressure':html.Div([
+        html.P(['''High blood pressure (hypertension) is one of the most 
+        important risk factors for Cardiovascular disease. The ideal blood 
+        pressure is usually considered to be between 90/60mmHg and 120/80mmHg.
+        Blood pressure readings between 120/80mmHg and 140/90mmHg could mean 
+        you're at risk of developing high blood pressure if you do not take 
+        steps to keep your blood pressure under control. ''']),
+        html.P(['These lifestyle changes can help prevent and lower high blood pressure:',html.Br(),
+        '· reduce the amount of salt you eat and have a generally healthy diet',html.Br(),
+        "· exercise regularly",html.Br(),
+        "· cut down on caffeine",html.Br(),
+        dcc.Graph(figure=fig1),
+        dcc.Graph(figure=fig2)
+        ]),
+    ]),
+    'Smoking':html.Div([
+        html.P(['''Smoking and other tobacco use is also a significant 
+        risk factor for CVD. The harmful substances in tobacco can damage
+        and narrow your blood vessels. If you smoke, you should try to give
+        up as soon as possible.''']),
+        dcc.Graph(figure=fig3),
+        html.P(['Odds-ratio = 2.16. Smoking siginificantly increases the probability of getting a heart disease.']),
+    ]),
+    'High Cholesterol':html.Div([
+        html.P(['''Cholesterol is a fatty substance found in the blood. 
+        It's mainly caused by eating fatty food, not exercising enough, 
+        being overweight, smoking and drinking alcohol. It can also run 
+        in families.Too much cholesterol can block your blood vessels. 
+        It makes you more likely to have heart problems or a stroke. 
+        You can lower your cholesterol by eating healthily and getting more exercise. 
+        Some people also need to take medicine.''']),
+        dcc.Graph(figure=fig4)
+    ]),
+    'Diabetes':html.Div([
+        html.P(['''Diabetes is a lifelong condition that causes your blood sugar level to become too high. 
+        High blood sugar levels can damage the blood vessels, making them more likely to become narrowed.
+        If you're diagnosed with diabetes, you'll need to eat healthily, take regular exercise and carry 
+        out regular blood tests to ensure your blood glucose levels stay balanced.''']),
+        html.Br(),
+        html.P(['''People diagnosed with type 1 diabetes also require regular insulin injections for the 
+        rest of their life. As type 2 diabetes is a progressive condition, medicine may eventually be required, 
+        usually in the form of tablets.''']),
+        dcc.Graph(figure=fig5)
+    ]),
+    'Inactivity':html.Div([
+        html.P(['''If you don't exercise regularly, it's more likely that you'll have high blood pressure, 
+    high cholesterol levels and be overweight. All of these are risk factors for CVD. Exercising regularly 
+    will help keep your heart healthy. When combined with a healthy diet, exercise can also help you maintain 
+    a healthy weight.
+    ''']),
+        dcc.Graph(figure=fig6)
+    ]),
+    'Obsease':html.Div([
+        html.P(['The best way to treat obesity is to eat a healthy reduced-calorie diet and exercise regularly.',html.Br(),
+        'To do this, you should:',html.Br(),
+        '·Eat a balanced calorie-controlled diet as recommended by a GP or weight loss management health professional (such as a dietitian) join a local weight loss group',html.Br(),
+        '·Take up activities such as fast walking, jogging, swimming or tennis for 150 to 300 minutes (2.5 to 5 hours) a week.',html.Br(),
+        '·Eat slowly and avoid situations where you know you could be tempted to overeat',html.Br(),
+        '·You may also benefit from receiving psychological support from a trained healthcare professional to help change the way you think about food and eating.',html.Br(),
+        html.Br(),
+        'If lifestyle changes alone do not help you lose weight, a medicine called orlistat may be recommended.'
+        ]),
+        dcc.Graph(figure=fig7)
+    ]),
+    'Alcohol':html.Div([
+        html.P(['''
+        Excessive alcohol consumption can also increase your cholesterol and blood pressure levels, 
+        and contribute to weight gain. 
+        ''']) #no figure for alcohol drinking
+    ])
+}
+
+
+#3
+
+
+
+
+
+layout = html.Div(children=[
+
+                    html.Div(style={ 'display': 'inline-flex','margin-left': '26%'},
+                        children=[  dcc.Link(html.Button("Risk Factor Analysis"), href="/page2"),
+                                    dcc.Link(html.Button("Location Visualizations"), href="/page4"),]),
+                        
+                    #1
+                    html.Div([
+                                dcc.Checklist(
+                                    id="risk_factors",
+                                    options=[
+                                        {"label": l.capitalize(), "value": l}
+                                        for l in risk_suggestions.keys()
+                                    ],
+                                    value=[]
+                                    ),
+                                    
+                                    html.Div(id = 'suggestions')
+                                ]),
+                    #2
+                    html.Div(children=[
+                                    html.Label('Select Risk Factors'),
+                                    dcc.Dropdown(get_dropdown_options(),
+                                                    multi=True,
+                                                    id='corr-factors'
+                                                ),
+                                    dcc.Graph(
+                                        id='corr-plot',
+                                    )
+                                ]),
+                    
+                    
+                    #3
+                   
+                    #4
+                    
+
+
+                    
+                
+                ])
+#1
+@callback(
+    Output('corr-plot', 'figure'),
+     Input('corr-factors', 'value')
+ )
+def correlation_plot(cols):
+    """Correlation between the selected factors and cardiovascular disease risk.
+     """
+   
+    return px.bar(x=cols, y=compute_importance(cols), title='Correlation',
+         labels={'x': 'Risk Factors', 'y':'Correlation'}, width=500)
+
+#2
+@callback(
+    Output('suggestions','children'),
+    Input('risk_factors', 'value')
+)
+def give_suggestions(factors):
+    suggestions = []
+    if len(factors)==0:
+        suggestions.append("Your condition is perfect! (This cannot be used as medical advice)")
+        return suggestions
+    for i in factors:
+        suggestions.append(risk_suggestions[i])
+    return html.Div(suggestions)
+
+
+
+
+#4
+
+
+
+
+if __name__ == '__main__':
+    app.run_server(debug=True)

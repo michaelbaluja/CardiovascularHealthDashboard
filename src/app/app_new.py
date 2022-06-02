@@ -1,7 +1,8 @@
+from importlib.resources import path
 from dash import Dash, dcc, html, Input, Output, callback
 import dash_bootstrap_components as dbc
 import dash_extensions as de
-from pages import page0,page1, page2, page3
+from pages import page0,page1, page2, page3,page4
 
 
 
@@ -33,6 +34,8 @@ def display_page(pathname):
        return page2.layout
     elif pathname=='/page3':
        return page3.layout
+    elif pathname=='/page4':
+        return page4.layout
     else:
         return index_page
     

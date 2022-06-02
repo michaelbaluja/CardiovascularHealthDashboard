@@ -11,7 +11,7 @@ def save_model(dataset):
     from sklearn.linear_model import LogisticRegression
     logreg = LogisticRegression(class_weight='balanced',max_iter=10000)
     logreg.fit(X_train,y_train)
-    filename = 'full_finalized_model.sav'
+    filename = 'models/full_finalized_model.sav'
     pickle.dump(logreg, open(filename, 'wb'))
 
     
