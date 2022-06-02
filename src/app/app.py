@@ -1,11 +1,9 @@
-from turtle import clear
 from layout_main import run_standalone_app
 from dash.dependencies import Input, Output, State
 from dash import html
 from dash import dcc
 import pandas as pd
 import plotly.express as px
-import os
 
 def read_data(filepath):
     return pd.read_csv(filepath)
