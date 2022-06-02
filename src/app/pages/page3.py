@@ -141,8 +141,8 @@ def predict(
     weight = _convert_imp_metr_weight(weight)
 
     model_params = [
-        gender, height, weight, highbp, lowbp, glucose, cholestrol,
-        smoke, drink, exercise, age
+        gender, height, weight, highbp, lowbp, cholestrol==1,cholestrol==2,
+        cholestrol==3,glucose==1,glucose==2,glucose==3,smoke, drink, exercise, age
     ]
 
     if any(map(lambda param: param is None, model_params)):
