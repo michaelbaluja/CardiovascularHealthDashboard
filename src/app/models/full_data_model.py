@@ -1,18 +1,16 @@
 from jsbeautifier import main
-from sklearn.linear_model import LogisticRegression
+from sklearn.neural_network import MLPClassifier
+
 import pickle 
 import pandas as pd
 import os
 def save_model(dataset):
-    from sklearn.model_selection import train_test_split
-    X=dataset[['gender','height','weight','ap_hi','ap_lo','gluc','cholesterol','smoke','alco','active','age in yrs']]
+    X=dataset[['gender','height','weight','ap_hi','ap_lo','smoke','alco','active','age in yrs','cholesterol=1','cholesterol=2','cholesterol=3','gluc=1','gluc=2','gluc=3']]
     y=dataset.cardio
-    X_train,X_test,y_train,y_test = train_test_split(X,y,test_size=0.10, random_state=42)
-    from sklearn.linear_model import LogisticRegression
-    logreg = LogisticRegression(class_weight='balanced',max_iter=10000)
-    logreg.fit(X_train,y_train)
-    filename = 'models/full_finalized_model.sav'
-    pickle.dump(logreg, open(filename, 'wb'))
+    clf = MLPClassifier(hidden_layer_sizes=(32,64,128),alpha=0.001,random_state=1,solver='adam', max_iter=5000).fit(X, y)
+
+    filename = r'src\app\models\full_finalized_model.sav'
+    pickle.dump(clf, open(filename, 'wb'))
 
     
     
@@ -20,5 +18,5 @@ def save_model(dataset):
 if __name__=='__main__':
     path=os.getcwd()
     print(path)
-    dataset=pd.read_csv("models/kaggle_cleaned.csv")
+    dataset=pd.read_csv(r"src\app\models\Kagglecleaned3.csv")
     save_model(dataset)
