@@ -1,7 +1,7 @@
 from matplotlib.pyplot import ylabel
 import pandas as pd
 import plotly.express as px
-from validation import _zip_to_county
+from utils.validation import _zip_to_county
 
 DF_PERCENT_FILEPATH =  '../data/trends_by_percent.csv'
 DF_100K_FILEPATH = '../data/trends_by_100k.csv'
