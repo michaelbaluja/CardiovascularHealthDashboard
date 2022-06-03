@@ -224,7 +224,7 @@ risk_suggestions = {
                                                     html.Br(),
                                                 ]),
                                     ]),
-    'Obese':html.Div(children=[ html.Div(dcc.Graph(figure=fig7),className='graphs'),
+    'Obesity':html.Div(children=[ html.Div(dcc.Graph(figure=fig7),className='graphs'),
                                 html.Div(className='writings',children=[html.P(['The best way to treat obesity is to eat a healthy reduced-calorie diet and exercise regularly.',html.Br(),
                                     'To do this, you should:',html.Br(),
                                     '·Eat a balanced calorie-controlled diet as recommended by a GP or weight loss management health professional (such as a dietitian).',html.Br(),
