@@ -251,20 +251,19 @@ layout = html.Div(children=[
                     html.H1("Risk Factor Analysis", style=header_style),
                     html.Div(style={ 'display': 'inline-flex'},
                         children=[dcc.Link(html.Button("Risk Factor Analysis", style={
-                                       "width": "230%",
-                                       "margin-left": "0%",
+                                       "width": "190%",
+                                       "margin-left": "25%",
                                         "background": "rgb(26, 188, 156)",
-                                        "opacity": "0.7",
                                         "color": "white",
                                         "border": "rgb(26, 188, 156)",
                                         }), href="/page2"),
                                     dcc.Link(html.Button("Location Visualizations",style={
-                                       "width": "230%",
-                                       "margin-left": "0%",
+                                        "display": "inline-block",
+                                       "width": "190%",
                                         "background": "rgb(26, 188, 156)",
-                                        "opacity": "0.7",
                                         "color": "white",
                                         "border": "rgb(26, 188, 156)",
+                                        "margin-left": "120%"
                                         }), href="/page4"),
                                     ]),
                     #1
@@ -289,8 +288,8 @@ layout = html.Div(children=[
                     html.Br(),
                     #2
                     html.Div(children=[
-                                    html.H3("Correlation Analysis", style={"margin-left":"15px"}),
-                                    html.P("Write something", style={"margin-top": "15px",
+                                    html.H3("Correlation Analysis", style={"margin-left":"1%"}),
+                                    html.P("Understand the correlation between the risk factors and Cardiovasular diseases", style={"margin-top": "15px",
                                                 "margin-bottom": "3%",
                                                 "margin-right": "3%",
                                                 "margin-left":"3%"}),
@@ -298,12 +297,11 @@ layout = html.Div(children=[
                                                     value=['alco', 'smoke'],
                                                     multi=True,
                                                     id='corr-factors',
-                                                    style={"width":"800px", "margin-left":"7px"}
+                                                    style={"width":"800px", "margin-left":"2%"}
                                                 ),
                                 html.Div(dcc.Graph(
                                         id='corr-plot',
                                     ),className="graphs"),
-                                    
                                 ]),
                 
                 ])
