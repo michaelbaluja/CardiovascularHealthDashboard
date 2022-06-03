@@ -14,8 +14,17 @@ with urlopen('https://raw.githubusercontent.com/plotly/datasets/master/geojson-c
     counties = json.load(response)
 #Used for plotting. We can predownload the json if thats better ? 
 
+header_style = {
+  "padding": "25px",
+  "text-align": "center",
+  "background": "#1abc9c",
+  "color": "white",
+  "font-size": "xx-large",
+}
+
 layout = html.Div(children=[
                     #1
+                    html.H1("Risk Factor Analysis", style=header_style),
                     html.Div(style={ 'display': 'inline-flex'},
                         children=[  dcc.Link(html.Button("Risk Factor Analysis",style={'width': '230%','margin-left': '0%','background': 'rgb(0,255,156)','opacity': '70%'}), href="/page2"),
                                     dcc.Link(html.Button("Location Visualizations",style={'width': '189%','margin-left': '116%','background': 'rgb(0,255,156)','opacity': '70%'}), href="/page4"),]),

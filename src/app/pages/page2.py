@@ -6,6 +6,14 @@ import json
 import plotly.graph_objects as go
 from sklearn.feature_selection import SelectKBest, chi2
 
+header_style = {
+  "padding": "25px",
+  "text-align": "center",
+  "background": "#1abc9c",
+  "color": "white",
+  "font-size": "xx-large",
+}
+
 app = Dash(__name__)
 ##################################1
 
@@ -73,15 +81,15 @@ with urlopen('https://raw.githubusercontent.com/plotly/datasets/master/geojson-c
 
 #data
 dataset1=pd.read_csv("../../data/Kagglecleaned3.csv")
-dataset1.loc[dataset1['cardio']==0,'cardio'] = 'No CVD'
-dataset1.loc[dataset1['cardio']==1,'cardio'] = 'CVD patient'
+dataset1.loc[dataset1['cardio']==0,'cardio'] = 'No heart condition'
+dataset1.loc[dataset1['cardio']==1,'cardio'] = 'Heart condition'
 dataset1.rename(columns = {'ap_hi':'systolic pressure', 'ap_lo':'diastolic pressure'}, inplace = True)
-dataset1.loc[dataset1['active']==0,'active'] = 'Exercise Regularily'
+dataset1.loc[dataset1['active']==0,'active'] = 'Regular Exercise'
 dataset1.loc[dataset1['active']==1,'active'] = 'Lack of Exercise'
 
 dataset2 = pd.read_csv('../../data/kaggle_cleaned.csv') #for easy use
-dataset2.loc[dataset2['cardio']==0,'cardio'] = 'No CVD'
-dataset2.loc[dataset2['cardio']==1,'cardio'] = 'CVD patient'
+dataset2.loc[dataset2['cardio']==0,'cardio'] = 'No heart condition'
+dataset2.loc[dataset2['cardio']==1,'cardio'] = 'Heart condition'
 dataset2.loc[dataset2['cholesterol']==1,'cholesterol'] = 'Normal (<200mg/dL)'
 dataset2.loc[dataset2['cholesterol']==2,'cholesterol'] = 'Above Normal (200~239mg/dL)'
 dataset2.loc[dataset2['cholesterol']==3,'cholesterol'] = 'Well Above Normal (>240mg/dL)'
@@ -95,7 +103,7 @@ fig1 = px.box(dataset1, y = 'systolic pressure', x='cardio', color='cardio')
 fig2 = px.box(dataset1, y = 'diastolic pressure', x='cardio', color='cardio')
 
 #figure for Smoking (data from heart_2020_cleaned.csv, the other dataset does not show significant relationship on smoking, weird)
-fig3 = go.Figure(data=[go.Table(header=dict(values=['','CVD patient', 'No CVD']),
+fig3 = go.Figure(data=[go.Table(header=dict(values=['','Heart condition', 'No heart condition']),
                  cells=dict(values=[['Smoker', 'Non-Smoker'],[16037, 11336], [115871, 176551]]))])
 
 #figure for cholesterol
@@ -109,6 +117,7 @@ fig6 = px.histogram(dataset1, x='cardio', color="active", barmode='group')
 dataset1['BMI'] = dataset1['weight']/(dataset1['height']**2)*10000
 dataset1 = dataset1[dataset1['BMI']<50]
 fig7 = px.box(dataset1, y = 'BMI', x='cardio', color='cardio')
+
 
 
 risk_suggestions = {
@@ -199,7 +208,7 @@ risk_suggestions = {
 
 
 layout = html.Div(children=[
-
+                    html.H1("Risk Factor Analysis", style=header_style),
                     html.Div(style={ 'display': 'inline-flex'},
                         children=[  dcc.Link(html.Button("Risk Factor Analysis",style={'width': '230%','margin-left': '0%','background': 'rgb(0,255,156)','opacity': '70%'}), href="/page2"),
                                     dcc.Link(html.Button("Location Visualizations",style={'width': '189%','margin-left': '116%','background': 'rgb(0,255,156)','opacity': '70%'}), href="/page4"),]),

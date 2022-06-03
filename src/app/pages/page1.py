@@ -5,11 +5,21 @@ import pickle
 import pandas as pd
 import numpy as np
 
+header_style = {
+  "padding": "25px",
+  "text-align": "center",
+  "background": "#1abc9c",
+  "color": "white",
+  "font-size": "xx-large",
+}
+
+disclaimer_text = "We do not claim to be medical professionals. Please consult your healthcare supervisor before taking action on any advice or results."
+
 layout = html.Div(
-    
-    children=html.Div(children=[html.H1("Heart Disease Risk Prediction Model",style={'margin-left': '23%'}),html.Div(className='HeartBeat', style={'top': '38%', 'left': '20%'}, children=[
-        html.P("PLEASE FILL OUT THE FOLLOWING DETAILS", style={
-               'color': 'rgb(0, 255, 156)', 'font-size': 'x-large'}),
+    children=html.Div(children=[html.H1("Risk Evaluator - General",style=header_style),
+    html.Div(className='HeartBeat', style={'top': '42%', 'left': '20%'}, children=[
+        html.P("PLEASE FILL THE FOLLOWING DETAILS", style={'font-size': 'x-large'}),
+        #html.Div(className="disclaimer-2", children=[html.P(disclaimer_text)]),
         html.Div(className='app-controls-block', children=[
             html.P("Age"),
             dcc.Input(
