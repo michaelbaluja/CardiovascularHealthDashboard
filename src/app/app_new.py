@@ -15,7 +15,7 @@ app.layout = html.Div([
 ])
 
 description = "This dashboard aims to provide users with information about their current heart health condition with a personalized \
-    risk assessment for users, keeping their privacy in mind. It provide visualizations analyzing the relationship between \
+    risk assessment for users, keeping their privacy in mind. It provides visualizations analyzing the relationship between \
     several risk factors and cardiovascular diseases."
 
 index_page =html.Div(children=[
