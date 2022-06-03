@@ -121,6 +121,27 @@ fig7 = px.box(dataset1, y = 'BMI', x='cardio', color='cardio')
 
 
 risk_suggestions = {
+    'Diabetes':html.Div(children=[html.Div(dcc.Graph(figure=fig5),className='graphs'),
+                                        html.Div(className='writings',children=[html.P(['''If you have diabetes, you’re twice as likely to have heart disease or a
+                                        stroke than someone who doesn’t have diabetes. Diabetes also causes some other risk factors such as blood pressure 
+                                        to rise. People diagnosed with type 1 diabetes also require regular insulin injections for the 
+                                        rest of their life. As type 2 diabetes is a progressive condition, medicine may eventually be required, 
+                                        usually in the form of tablets.''']),
+                                        html.Br(),
+                                        html.P(['To reduce the risk of diabetes you could -',html.Br(),
+                                                '· Follow a balanced diet',html.Br(),
+                                                "· Exercise regularly",html.Br(),
+                                                "· Check your blood sugar levels regularly",html.Br()]),
+                                                html.P(['Useful Links',html.Br(),
+                                                    html.A("https://www.cdc.gov/diabetes/library/features/diabetes-and-heart.html", 
+                                                        href='https://www.cdc.gov/diabetes/library/features/diabetes-and-heart.html', target="_blank"),
+                                                    html.Br(),
+                                                    html.A("https://www.diabetes.org/diabetes/cardiovascular-disease", 
+                                                        href='https://www.diabetes.org/diabetes/cardiovascular-disease', target="_blank"),
+                                                    html.Br(),
+                                                ]), 
+                                        ])
+                                    ]),
     'High blood Pressure':html.Div(children=[
                                      html.Div(className='graphs',children=[dcc.Graph(figure=fig1),
                                                         dcc.Graph(figure=fig2)]),
@@ -184,27 +205,7 @@ risk_suggestions = {
                                                 ]),             
                                         ])
                             ]),
-    'Diabetes':html.Div(children=[html.Div(dcc.Graph(figure=fig5),className='graphs'),
-                                        html.Div(className='writings',children=[html.P(['''If you have diabetes, you’re twice as likely to have heart disease or a
-                                        stroke than someone who doesn’t have diabetes. Diabetes also causes some other risk factors such as blood pressure 
-                                        to rise. People diagnosed with type 1 diabetes also require regular insulin injections for the 
-                                        rest of their life. As type 2 diabetes is a progressive condition, medicine may eventually be required, 
-                                        usually in the form of tablets.''']),
-                                        html.Br(),
-                                        html.P(['To reduce the risk of diabetes you could -',html.Br(),
-                                                '· Follow a balanced diet',html.Br(),
-                                                "· Exercise regularly",html.Br(),
-                                                "· Check your blood sugar levels regularly",html.Br()]),
-                                                html.P(['Useful Links',html.Br(),
-                                                    html.A("https://www.cdc.gov/diabetes/library/features/diabetes-and-heart.html", 
-                                                        href='https://www.cdc.gov/diabetes/library/features/diabetes-and-heart.html', target="_blank"),
-                                                    html.Br(),
-                                                    html.A("https://www.diabetes.org/diabetes/cardiovascular-disease", 
-                                                        href='https://www.diabetes.org/diabetes/cardiovascular-disease', target="_blank"),
-                                                    html.Br(),
-                                                ]), 
-                                        ])
-                                    ]),
+    
     'Inactivity':html.Div(children=[ html.Div(dcc.Graph(figure=fig6),className='graphs'),
                                         html.Div(className='writings',children=[ html.P(['''Not getting enough physical activity can lead to heart 
                                         disease—even for people who have no other risk factors. It can also increase the likelihood of developing other 
@@ -249,10 +250,10 @@ risk_suggestions = {
 
 layout = html.Div(children=[
                     html.H1("Risk Factor Analysis", style=header_style),
-                    html.Div(style={ 'display': 'inline-flex'},
-                        children=[  dcc.Link(html.Button("Risk Factor Analysis",style={'width': '262%','margin-left': '0%','background': 'rgb(26, 188, 156)','color':'white','border': 'rgb(26, 188, 156)','text-transform':'Capitalize'
+                    html.Div(style={ 'display': 'inline-flex','margin-top':'-1%'},
+                        children=[  dcc.Link(html.Button("Risk Factor Analysis",style={'width': '271%','margin-left': '0%','background': 'rgb(26, 188, 156)','color':'white','border': 'rgb(26, 188, 156)','text-transform':'Capitalize'
                         ,'font-family':' "Open Sans", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif'}), href="/page2"),
-                                    dcc.Link(html.Button("Location Visualizations",style={'width': '262%','margin-left': '144%','background': 'rgb(26, 188, 156)','color':'white','border': 'rgb(26, 188, 156)','text-transform':'Capitalize',
+                                    dcc.Link(html.Button("Location Visualizations",style={'width': '247%','margin-left': '154%','background': 'rgb(26, 188, 156)','color':'white','border': 'rgb(26, 188, 156)','text-transform':'Capitalize',
                                     'font-family':' "Open Sans", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif'}), href="/page4"),]),
                     #1
                     html.Br(),
@@ -264,7 +265,7 @@ layout = html.Div(children=[
                                         {"label": l.capitalize(), "value": l}
                                         for l in risk_suggestions.keys()
                                     ],
-                                    value='High blood Pressure',
+                                    value='Diabetes',
                                     style={"width":"200px", "margin-left":"7px"}
                                     ),
                                     

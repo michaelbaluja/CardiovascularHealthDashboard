@@ -1,9 +1,11 @@
 from dash import dcc, html, Input, Output, callback
-from utils.defaults import gender_options, yes_no_options
+from utils.defaults import gender_options
 from utils.validation import _convert_imp_metr_height, _convert_imp_metr_weight
 import pickle
 import pandas as pd
 import numpy as np
+yes_no_options = {0: 'Yes',1: 'No'}
+yes_no_option_exercise={1:'Yes',0:'No'}
 
 header_style = {
   "padding": "25px",
@@ -79,7 +81,7 @@ layout = html.Div(
             html.Div(className='app-controls-block', children=[
                 html.P("Do you Exercise Regularly?", ),
                 dcc.Dropdown(id='exercise',
-                             options=yes_no_options,
+                             options=yes_no_option_exercise,
                              ),
             ]),
         ]),

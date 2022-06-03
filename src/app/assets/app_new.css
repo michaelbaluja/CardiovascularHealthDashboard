@@ -145,4 +145,6 @@ body, html {
 }
 
 
-
+.plotly.graph_objects.table.Cells{
+  height:10%
+}

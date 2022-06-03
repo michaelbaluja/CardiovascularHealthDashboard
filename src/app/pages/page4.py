@@ -25,10 +25,10 @@ header_style = {
 layout = html.Div(children=[
                     #1
                     html.H1("Risk Factor Analysis", style=header_style),
-                    html.Div(style={ 'display': 'inline-flex'},
-                        children=[  dcc.Link(html.Button("Risk Factor Analysis",style={'width': '262%','margin-left': '0%','background': 'rgb(26, 188, 156)','color':'white','border': 'rgb(26, 188, 156)','text-transform':'Capitalize'
+                    html.Div(style={ 'display': 'inline-flex','margin-top':'-1%'},
+                        children=[  dcc.Link(html.Button("Risk Factor Analysis",style={'width': '271%','margin-left': '0%','background': 'rgb(26, 188, 156)','color':'white','border': 'rgb(26, 188, 156)','text-transform':'Capitalize'
                         ,'font-family':' "Open Sans", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif'}), href="/page2"),
-                                    dcc.Link(html.Button("Location Visualizations",style={'width': '262%','margin-left': '144%','background': 'rgb(26, 188, 156)','color':'white','border': 'rgb(26, 188, 156)','text-transform':'Capitalize',
+                                    dcc.Link(html.Button("Location Visualizations",style={'width': '247%','margin-left': '154%','background': 'rgb(26, 188, 156)','color':'white','border': 'rgb(26, 188, 156)','text-transform':'Capitalize',
                                     'font-family':' "Open Sans", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif'}), href="/page4"),]),
                     #2[
                     html.H3("Enter Zip code", style={'margin-left':'2%'}),

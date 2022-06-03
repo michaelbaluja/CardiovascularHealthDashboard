@@ -1,8 +1,9 @@
 from dash import dcc, html, Input, Output, callback
 import pickle
-from utils.defaults import gender_options, yes_no_options
+from utils.defaults import gender_options
 from utils.validation import _convert_imp_metr_height, _convert_imp_metr_weight
-
+yes_no_options = {0: 'Yes',1: 'No'}
+yes_no_option_exercise={1:'Yes',0:'No'}
 header_style = {
   "padding": "25px",
   "text-align": "center",
@@ -108,14 +109,14 @@ layout = html.Div(
             html.Div(className='app-controls-block', children=[
                 html.P("Do you Exercise Regularly?", ),
                 dcc.Dropdown(id='exercise',
-                             options=yes_no_options,
+                             options=yes_no_option_exercise,
                              ),
             ]),
 
             html.Div(className='app-controls-block', children=[
                 html.P("Cholestrol level", ),
                 dcc.Dropdown(id='cholestrol',
-                            options=['Normal (<200mg/dL)','Above Normal (200~239mg/dL)','Well Above Normal (>240mg/dL)'],
+                            options=['Normal(<200mg/dL)','Above Normal(200~239mg/dL)','Abnormal(>240mg/dL)'],
                             ),
             ]),
             html.Div(className='app-controls-block', children=[
@@ -123,7 +124,7 @@ layout = html.Div(
                 dcc.Dropdown(
                     className='app-input',
                     id='glucose',
-                    options=['Normal (<99mg/dL)', 'Above Normal (100~125mg/dL)','Well Above Normal (>126mg/dL)']
+                    options=['Normal(<99mg/dL)', 'Above Normal(100~125mg/dL)','Abnormal (>126mg/dL)']
                 ),
             ]),
         ]),
@@ -171,9 +172,9 @@ def predict(
 
         model_params = [
         int(gender), height, weight, float(highbp), float(lowbp), int(smoke),int(drink), int(exercise), age,
-        int(cholestrol=='Normal (<200mg/dL)'),int(cholestrol=='Above Normal (200~239mg/dL)'),
-        int(cholestrol=='Well Above Normal (>240mg/dL)'),int(glucose=='Normal (<99mg/dL)',),
-        int(glucose=='Above Normal (100~125mg/dL)'),int(glucose=='Well Above Normal (>126mg/dL)')
+        int(cholestrol=='Normal(<200mg/dL)'),int(cholestrol=='Above Normal(200~239mg/dL)'),
+        int(cholestrol=='Abnormal(>240mg/dL)'),int(glucose=='Normal(<99mg/dL)',),
+        int(glucose=='Above Normal(100~125mg/dL)'),int(glucose=='Abnormal(>126mg/dL)')
     ]
         print(model_params)
         result = model.predict_proba([model_params])
