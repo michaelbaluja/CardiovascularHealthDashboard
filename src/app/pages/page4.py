@@ -42,7 +42,9 @@ layout = html.Div(children=[
                     dcc.Graph(id='mort-trend'),
                     html.Br(),
                     html.H3("Map of Nearby Hospitals", style={'margin-left':'2%'}),
-                    dcc.Graph(id='hosp-map', style={"width":"80%", 'margin-left':'2%'})
+                    dcc.Graph(id='hosp-map', style={"width":"95%", "height":'100%', 'margin-left':'2.5%'}),
+                    html.Br(),
+                    html.Br()
                 ])
 
 @callback(
