@@ -20,7 +20,7 @@ description = "This dashboard aims to provide users with information about their
 
 index_page =html.Div(children=[
                     #title
-                    html.Div(className="app-header", children=[html.H1("Cardio Care")]),
+                    html.Div(className="app-header", children=[html.H1("Cardiovascular Health Dashboard")]),
                     #style={'margin-left': '12%','opacity':'70%'}),style={'background': 'rgb(0,255,156)','opacity':'38%',
 
                     #description
