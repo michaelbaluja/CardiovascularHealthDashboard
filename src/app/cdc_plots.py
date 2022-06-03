@@ -5,12 +5,12 @@ from uszipcode import SearchEngine
 
 # DF_PERCENT_FILEPATH =  '../../data/trends_by_percent.csv'
 DF_100K_FILEPATH = '../../data/trends_by_100k.csv'
-TRENDS_DF_PATH = '../../data/trends_heart_disease.csv'
+#TRENDS_DF_PATH = '../../data/trends_heart_disease.csv'
 HOSPITAL_DF_PATH = '../../data/us_hospital_locations.csv'
 
 # df_percent = pd.read_csv(DF_PERCENT_FILEPATH)
 df_100k = pd.read_csv(DF_100K_FILEPATH)
-trends_df = pd.read_csv(TRENDS_DF_PATH)
+#trends_df = pd.read_csv(TRENDS_DF_PATH)
 hosp_df = pd.read_csv(HOSPITAL_DF_PATH)
 
 def get_all_zips():
