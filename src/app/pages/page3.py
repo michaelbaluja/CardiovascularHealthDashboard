@@ -23,7 +23,7 @@ layout = html.Div(
             ),
         ]),
         html.Div(className='app-controls-block', children=[
-            html.P("Gender"),
+            html.P("Gender", ),
             dcc.Dropdown(id='genderdrop',
                          options=gender_options,
                          ),
@@ -141,15 +141,20 @@ def predict(
     weight = _convert_imp_metr_weight(weight)
 
     model_params = [
-        gender, height, weight, highbp, lowbp, cholestrol==1,cholestrol==2,
-        cholestrol==3,glucose==1,glucose==2,glucose==3,smoke, drink, exercise, age
+        gender, height, weight, highbp, lowbp,cholestrol,glucose,smoke, drink, exercise, age
     ]
-
+    
     if any(map(lambda param: param is None, model_params)):
         result = [[0, 0]]
     else:
         with open('models/full_finalized_model.sav', 'rb') as model_file:
             model = pickle.load(model_file)
+
+        model_params = [
+        gender, height, weight, highbp, lowbp, int(smoke),int(drink), int(exercise), age,
+        int(cholestrol=='1'),int(cholestrol=='2'),
+        int(cholestrol=='3'),int(glucose=='1'),int(glucose=='2'),int(glucose=='3')
+    ]
         result = model.predict_proba([model_params])
 
     return f'{round(result[0][1]*100, 2)}%'
