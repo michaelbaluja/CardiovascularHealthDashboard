@@ -25,8 +25,10 @@ disclaimer_style = {
 layout = html.Div(
     children=html.Div(children=[html.H1("Risk Evaluator - Detailed", style=header_style),
         html.Div(children=[html.P(disclaimer_text, style=disclaimer_style)]),
-        html.Div(className='HeartBeat', style={'top': '50%', 'left': '13%'}, children=[
-        html.P("Please fill the following details", style={'font-size': 'x-large'}),
+        html.P("Please fill the following details", style={'font-size': 'x-large','position': 'absolute',
+    'top': '11%','left': '1%'}),
+        html.Div(className='HeartBeat', style={'top': '61%', 'left': '8%'}, children=[
+        
         
         html.Div(className='app-controls-block', children=[
             html.P("Age"),
@@ -55,30 +57,6 @@ layout = html.Div(
             ),
         ]),
         html.Div(className='app-controls-block', children=[
-            html.P("High BP level", ),
-            dcc.Input(
-                className='app-input',
-                id='highbp',
-                type='number',
-                min=50,
-                step=1
-            ),
-        ]),
-        
-             ]),
-
-        html.Div(className='HeartBeat', style={'top': '52%','left':'33%'}, children=[
-            html.Div(className='app-controls-block', children=[
-            html.P("Low BP level", ),
-            dcc.Input(
-                className='app-input',
-                id='lowbp',
-                type='number',
-                min=20,
-                step=1
-            ),
-        ]),
-        html.Div(className='app-controls-block', children=[
                 html.P("Weight (Pounds)"),
                 dcc.Input(
                     className='app-input',
@@ -88,6 +66,12 @@ layout = html.Div(
                     step=1
                 ),
             ]),
+        
+        
+             ]),
+
+        html.Div(className='HeartBeat', style={'top': '61%','left':'33%'}, children=[
+            
             html.Div(className='app-controls-block', children=[
                 html.P("Do you Smoke?", ),
                 dcc.Dropdown(id='smoke',
@@ -99,11 +83,31 @@ layout = html.Div(
                 dcc.Dropdown(id='drink',
                              options=yes_no_options,
                              ),
-            ])
+            ]),
+            html.Div(className='app-controls-block', children=[
+            html.P("Low BP level", ),
+            dcc.Input(
+                className='app-input',
+                id='lowbp',
+                type='number',
+                min=20,
+                step=1
+            ),
+        ]),
+        html.Div(className='app-controls-block', children=[
+            html.P("High BP level", ),
+            dcc.Input(
+                className='app-input',
+                id='highbp',
+                type='number',
+                min=50,
+                step=1
+            ),
+        ]),
 
 
         ]),
-        html.Div(className='HeartBeat', style={'top': '44%'}, children=[
+        html.Div(className='HeartBeat', style={'top': '49%','left':'53%'}, children=[
             
             
             html.Div(className='app-controls-block', children=[
@@ -128,7 +132,7 @@ layout = html.Div(
                 ),
             ]),
         ]),
-        html.Div(className='app-controls-block', children=html.Div(className='outer', children=[
+        html.Div(children=html.Div(className='outer', children=[
             html.Div(className='inner'), html.Div(
                 className="Number", id="predict_full", children=[])
         ]

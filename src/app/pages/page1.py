@@ -19,7 +19,7 @@ disclaimer_style = {
     'width': '36%',
     'height': '10%',
     'opacity': '0.9',
-    'left': '64%'
+    'left': '58%'
 }
 
 disclaimer_text = "We do not claim to be medical professionals.\n Please consult your healthcare supervisor before \n taking action on any advice or results."
@@ -27,9 +27,9 @@ disclaimer_text = "We do not claim to be medical professionals.\n Please consult
 layout = html.Div(
     children=html.Div(children=[html.H1("Risk Evaluator - General",style=header_style),
     html.Div(className="disclaimer-2", children=[html.P(disclaimer_text,style=disclaimer_style)]),
-    html.Div(className='HeartBeat', style={'top': '42%', 'left': '20%'}, children=[
-        html.P("Please fill the following details", style={'font-size': 'x-large'}),
-        html.Div(className='app-controls-block', children=[
+    html.P("Please fill the following details", style={'font-size': 'x-large'}),
+    html.Div(className='HeartBeat', style={'top': '56%', 'left': '8%'}, children=[
+        html.Div(className='app-controls-block1', children=[
             html.P("Age"),
             dcc.Input(
                 className='app-input',
@@ -39,13 +39,13 @@ layout = html.Div(
                 step=1
             ),
         ]),
-        html.Div(className='app-controls-block', children=[
+        html.Div(className='app-controls-block1', children=[
             html.P("Gender", ),
             dcc.Dropdown(id='genderdrop',
                          options=gender_options,
                          ),
         ]),
-        html.Div(className='app-controls-block', children=[
+        html.Div(className='app-controls-block1', children=[
             html.P("Height (Inches)"),
             dcc.Input(
                 className='app-input',
@@ -55,8 +55,8 @@ layout = html.Div(
                 step=1
             ),
         ]), ]),
-        html.Div(className='HeartBeat', style={'top': '47.5%'}, children=[
-            html.Div(className='app-controls-block', children=[
+        html.Div(className='HeartBeat', style={'top': '57.5%','left':'32%'}, children=[
+            html.Div(className='app-controls-block1', children=[
                 html.P("Weight (Pounds)"),
                 dcc.Input(
                     className='app-input',
@@ -66,19 +66,19 @@ layout = html.Div(
                     step=1
                 ),
             ]),
-            html.Div(className='app-controls-block', children=[
+            html.Div(className='app-controls-block1', children=[
                 html.P("Do you Smoke?", ),
                 dcc.Dropdown(id='smoke',
                              options=yes_no_options,
                              ),
             ]),
-            html.Div(className='app-controls-block', children=[
+            html.Div(className='app-controls-block1', children=[
                 html.P("Do you Drink?", ),
                 dcc.Dropdown(id='drink',
                              options=yes_no_options,
                              ),
             ]),
-            html.Div(className='app-controls-block', children=[
+            html.Div(className='app-controls-block1', children=[
                 html.P("Do you Exercise Regularly?", ),
                 dcc.Dropdown(id='exercise',
                              options=yes_no_option_exercise,
@@ -88,13 +88,13 @@ layout = html.Div(
 
 
 
-        html.Div(className='app-controls-block', children=html.Div(className='outer', children=[
+        html.Div( children=html.Div(style={'left':'59%'},className='outer', children=[
             html.Div(className='inner'), html.Div(
                 className="Number", id="predict", children=[])
         ]
         )),
         dcc.Link(html.Button("Show General Stats", style={
-                 'width': '22%', 'margin-left': '70.5%', 'margin-top': '1%'}), href="/page2"),
+                 'width': '22%', 'margin-left': '62.5%', 'margin-top': '1%'}), href="/page2"),
     ]))
 
 
