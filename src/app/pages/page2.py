@@ -17,7 +17,7 @@ def get_categorical_table()-> pd.DataFrame:
     pandas.DataFrame
     """
     # read the kaggle dataset
-    df = pd.read_csv('models/kaggle_cleaned.csv')
+    df = pd.read_csv('../../data/kaggle_cleaned.csv')
     return df[[*CATEGORICAL_COLUMNS, 'cardio']]
 
 df = get_categorical_table()
@@ -57,10 +57,7 @@ def compute_importance(x_vars) -> list:
 
 
 ############################################2
-with urlopen('https://raw.githubusercontent.com/plotly/datasets/master/geojson-counties-fips.json') as response:
-    counties = json.load(response)
-#print(data.drop('cardio').index.tolist())
-#This only uses the columns ['smoke', 'gender', 'alco', 'active', 'cardio'] from the kaggle_cleaned.csv
+
 
 #data
 dataset1=pd.read_csv("../../data/Kagglecleaned3.csv")
@@ -180,9 +177,9 @@ risk_suggestions = {
 
 layout = html.Div(children=[
 
-                    html.Div(style={ 'display': 'inline-flex','margin-left': '26%'},
-                        children=[  dcc.Link(html.Button("Risk Factor Analysis"), href="/page2"),
-                                    dcc.Link(html.Button("Location Visualizations"), href="/page4"),]),
+                    html.Div(style={ 'display': 'inline-flex'},
+                        children=[  dcc.Link(html.Button("Risk Factor Analysis",style={'width': '230%','margin-left': '0%','background': 'rgb(0,255,156)','opacity': '70%'}), href="/page2"),
+                                    dcc.Link(html.Button("Location Visualizations",style={'width': '189%','margin-left': '116%','background': 'rgb(0,255,156)','opacity': '70%'}), href="/page4"),]),
                         
                     #1
                     html.Div([

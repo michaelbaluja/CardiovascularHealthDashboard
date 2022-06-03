@@ -23,7 +23,7 @@ layout = html.Div(
             ),
         ]),
         html.Div(className='app-controls-block', children=[
-            html.P("Gender", ),
+            html.P("Gender"),
             dcc.Dropdown(id='genderdrop',
                          options=gender_options,
                          ),
