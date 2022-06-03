@@ -1,86 +1,56 @@
 import pandas as pd
-from dash.dependencies import Input, Output
+import dash
+from dash.dependencies import Input, Output, State
 from dash import html, dcc, Dash, callback
 import dash_bootstrap_components as dbc
 import plotly.express as px
 import plotly.graph_objects as go
 import json
 from urllib.request import urlopen
+import cdc_plots
 
 #1
 with urlopen('https://raw.githubusercontent.com/plotly/datasets/master/geojson-counties-fips.json') as response:
     counties = json.load(response)
 #Used for plotting. We can predownload the json if thats better ? 
 
-
-data2 = pd.read_csv("../../data/trends_by_100k.csv").drop(columns=['Unnamed: 0', 'Low_Bound', 'Up_Bound'])
-data2['Topic']=data2['Topic'].astype('string')
-data2['Age']=data2['Age'].astype('string')
-data2['LocationID']=data2['LocationID'].astype('string')
-data2['LocationID']=data2['LocationID'].apply((lambda x: x.zfill(5)))
-
-
-
-
-
-
-
 layout = html.Div(children=[
                     #1
                     html.Div(style={ 'display': 'inline-flex'},
                         children=[  dcc.Link(html.Button("Risk Factor Analysis",style={'width': '230%','margin-left': '0%','background': 'rgb(0,255,156)','opacity': '70%'}), href="/page2"),
                                     dcc.Link(html.Button("Location Visualizations",style={'width': '189%','margin-left': '116%','background': 'rgb(0,255,156)','opacity': '70%'}), href="/page4"),]),
-                        
-                        
                     #2[
-                    html.Div(className='graphs',children=[
-                                    dcc.Dropdown(['Ages 35-64 years', 'Ages 65 years and older'],
-                                                'Ages 35-64 years',
-                                                id='age'
-                                                ),
-
-                                    dcc.Dropdown(['Stroke', 'Coronary Heart Disease'],
-                                                'Stroke',
-                                                id='topic'
-                                                ),
-
-                                    dcc.Graph(
-                                        id='map',
-                                    )
-                                ]),
-                    html.H3("The map shows the number of people per 100k that have suffered either a Stroke or Coronary Heart Disease by county in the United States.\
-                        The two available age groups are 35-64 and 65+. The values are the annual average over the last 20 years.",className="writings",style={'font-size': '29px'}),
-                    
-                    #3
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        ])
-
+                    html.H3("Enter Zip code", style={'margin-left':'2%'}),
+                    html.P("Enter your zipcode to see location based infographics for cardiovasular related diseases.", style={'margin-left':'4%'}),
+                    dcc.Dropdown(id='zip-select', options=cdc_plots.get_all_zips(), style={"width":"200px", "margin-left":"4%"}),
+                    # dcc.Input(id='zip-input', style={"display": "inline-block","width": "220px", "margin-left": "4%"}),
+                    # html.Button(id='submit-button', type='submit', children='Submit', style=
+                    #     {"width":"150px","margin-left": "4%"}),
+                    html.Br(),
+                    dcc.Graph(id='mort-county'),
+                    dcc.Graph(id='mort-trend'),
+                    html.Br(),
+                    html.H3("Map of Nearby Hospitals", style={'margin-left':'2%'}),
+                    dcc.Graph(id='hosp-map', style={"width":"80%", 'margin-left':'2%'})
+                ])
 
 @callback(
-    Output('map', 'figure'),
-    Input('age', 'value'),
-    Input('topic', 'value'),
+    Output('mort-county', 'figure'),
+    Input('zip-select', 'value'), prevent_initial_call=True
 )
-def correlation_plot(age, topic):
-    """Create a map using the three selected targets.
-    """
-    x=data2[data2['Topic'] == topic]
-    x=x[x['Age'] == age]
+def age_plot(zip:int):
+    return cdc_plots.get_age_statistics(str(zip))
 
-    fig = px.choropleth(x, geojson=counties, locations='LocationID', color='Data_Value',
-                           color_continuous_scale="Viridis",
-                           range_color=(x['Data_Value'].min(), x['Data_Value'].max()),
-                           scope="usa",
-                           labels={'Data_Value':'cardiovascular disease per 100k pop.'},
-                           hover_data=['County', 'State']
-                          )
+@callback(
+    Output('mort-trend', 'figure'),
+    Input('zip-select', 'value'), prevent_initial_call=True
+)
+def trend_plot(zip:int):
+    return cdc_plots.get_trend_statistics(str(zip))
 
-    return fig
+@callback(
+    Output('hosp-map', 'figure'),
+    Input('zip-select', 'value'), prevent_initial_call=True
+)
+def map_plot(zip:int):
+    return cdc_plots.get_hospital_data(str(zip))
