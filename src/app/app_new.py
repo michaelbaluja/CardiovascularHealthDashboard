@@ -16,7 +16,7 @@ app.layout = html.Div([
 
 description = "This dashboard aims to provide users with information about their current heart health condition with a personalized \
     risk assessment for users, keeping their privacy in mind. It provide visualizations analyzing the relationship between \
-    several risk factors and cardiovascular diseases"
+    several risk factors and cardiovascular diseases."
 
 index_page =html.Div(children=[
                     #title
@@ -31,7 +31,7 @@ index_page =html.Div(children=[
                     children=[  
                         html.Div(style={'left':'67%', 'width':' 37%'},className="HeartBeat",children=[
                         html.Div(de.Lottie(options=options, url=url)),
-                        dcc.Link(html.Button("Get Started",style={'width': '44%','margin-left': '31%'}), href="/page0", refresh=True),
+                        dcc.Link(html.Button("Get Started",style={'width': '44%','margin-left': '30.5%'}), href="/page0", refresh=True),
                 ])
 ])
 ])

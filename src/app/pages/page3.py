@@ -14,20 +14,19 @@ header_style = {
 disclaimer_text = "We do not claim to be medical professionals. Please consult your healthcare supervisor before taking action on any advice or results."
 
 disclaimer_style = {
-  "position":"fixed",
-  "width":"90%",
-  "left":"100px", 
-  "bottom":"90%",
-  "opacity":"90%",
-  "font-size": "medium",
-  "text-align": "center"
+          'position': 'absolute',
+    'width': '36%',
+    'height': '10%',
+    'opacity': '0.9',
+    'left': '64%'
 }
 
 layout = html.Div(
     children=html.Div(children=[html.H1("Risk Evaluator - Detailed", style=header_style),
-        html.Div(className='HeartBeat', style={'top': '65%', 'left': '20%'}, children=[
+        html.Div(children=[html.P(disclaimer_text, style=disclaimer_style)]),
+        html.Div(className='HeartBeat', style={'top': '50%', 'left': '13%'}, children=[
         html.P("Please fill the following details", style={'font-size': 'x-large'}),
-        #html.Div(children=[html.P(disclaimer_text, style=disclaimer_style)]),
+        
         html.Div(className='app-controls-block', children=[
             html.P("Age"),
             dcc.Input(
@@ -64,7 +63,11 @@ layout = html.Div(
                 step=1
             ),
         ]),
-        html.Div(className='app-controls-block', children=[
+        
+             ]),
+
+        html.Div(className='HeartBeat', style={'top': '52%','left':'33%'}, children=[
+            html.Div(className='app-controls-block', children=[
             html.P("Low BP level", ),
             dcc.Input(
                 className='app-input',
@@ -81,12 +84,9 @@ layout = html.Div(
                     id='weight',
                     type='number',
                     min=0,
-                    step=0.1
+                    step=1
                 ),
             ]),
-             ]),
-        html.Div(className='HeartBeat', style={'top': '50%'}, children=[
-            
             html.Div(className='app-controls-block', children=[
                 html.P("Do you Smoke?", ),
                 dcc.Dropdown(id='smoke',
@@ -98,7 +98,13 @@ layout = html.Div(
                 dcc.Dropdown(id='drink',
                              options=yes_no_options,
                              ),
-            ]),
+            ])
+
+
+        ]),
+        html.Div(className='HeartBeat', style={'top': '44%'}, children=[
+            
+            
             html.Div(className='app-controls-block', children=[
                 html.P("Do you Exercise Regularly?", ),
                 dcc.Dropdown(id='exercise',

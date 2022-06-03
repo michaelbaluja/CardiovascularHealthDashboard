@@ -12,14 +12,21 @@ header_style = {
   "color": "white",
   "font-size": "xx-large",
 }
+disclaimer_style = {
+          'position': 'absolute',
+    'width': '36%',
+    'height': '10%',
+    'opacity': '0.9',
+    'left': '64%'
+}
 
-disclaimer_text = "We do not claim to be medical professionals. Please consult your healthcare supervisor before taking action on any advice or results."
+disclaimer_text = "We do not claim to be medical professionals.\n Please consult your healthcare supervisor before \n taking action on any advice or results."
 
 layout = html.Div(
     children=html.Div(children=[html.H1("Risk Evaluator - General",style=header_style),
+    html.Div(className="disclaimer-2", children=[html.P(disclaimer_text,style=disclaimer_style)]),
     html.Div(className='HeartBeat', style={'top': '42%', 'left': '20%'}, children=[
         html.P("Please fill the following details", style={'font-size': 'x-large'}),
-        #html.Div(className="disclaimer-2", children=[html.P(disclaimer_text)]),
         html.Div(className='app-controls-block', children=[
             html.P("Age"),
             dcc.Input(
@@ -43,7 +50,7 @@ layout = html.Div(
                 id='height',
                 type='number',
                 min=0,
-                step=0.1
+                step=1
             ),
         ]), ]),
         html.Div(className='HeartBeat', style={'top': '47.5%'}, children=[
@@ -54,7 +61,7 @@ layout = html.Div(
                     id='weight',
                     type='number',
                     min=0,
-                    step=0.1
+                    step=1
                 ),
             ]),
             html.Div(className='app-controls-block', children=[
@@ -85,7 +92,7 @@ layout = html.Div(
         ]
         )),
         dcc.Link(html.Button("Show General Stats", style={
-                 'width': '22%', 'margin-left': '36%', 'margin-top': '2%'}), href="/page2"),
+                 'width': '22%', 'margin-left': '70.5%', 'margin-top': '1%'}), href="/page2"),
     ]))
 
 
