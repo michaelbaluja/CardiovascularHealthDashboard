@@ -79,7 +79,7 @@ def correlation_plot(age, topic):
                            range_color=(x['Data_Value'].min(), x['Data_Value'].max()),
                            scope="usa",
                            labels={'Data_Value':'cardiovascular disease per 100k pop.'},
-                           hover=['County', 'State']
+                           hover_data=['County', 'State']
                           )
 
     return fig
