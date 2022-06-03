@@ -17,7 +17,7 @@ def get_categorical_table()-> pd.DataFrame:
     pandas.DataFrame
     """
     # read the kaggle dataset
-    df = pd.read_csv('../../data/kaggle_cleaned.csv')
+    df = pd.read_csv('models/kaggle_cleaned.csv')
     return df[[*CATEGORICAL_COLUMNS, 'cardio']]
 
 df = get_categorical_table()
@@ -57,26 +57,33 @@ def compute_importance(x_vars) -> list:
 
 
 ############################################2
-
+with urlopen('https://raw.githubusercontent.com/plotly/datasets/master/geojson-counties-fips.json') as response:
+    counties = json.load(response)
+#print(data.drop('cardio').index.tolist())
+#This only uses the columns ['smoke', 'gender', 'alco', 'active', 'cardio'] from the kaggle_cleaned.csv
 
 #data
 dataset1=pd.read_csv("../../data/Kagglecleaned3.csv")
 dataset1.loc[dataset1['cardio']==0,'cardio'] = 'No CVD'
 dataset1.loc[dataset1['cardio']==1,'cardio'] = 'CVD patient'
+dataset1.rename(columns = {'ap_hi':'systolic pressure', 'ap_lo':'diastolic pressure'}, inplace = True)
+dataset1.loc[dataset1['active']==0,'active'] = 'Exercise Regularily'
+dataset1.loc[dataset1['active']==1,'active'] = 'Lack of Exercise'
 
 dataset2 = pd.read_csv('../../data/kaggle_cleaned.csv') #for easy use
 dataset2.loc[dataset2['cardio']==0,'cardio'] = 'No CVD'
 dataset2.loc[dataset2['cardio']==1,'cardio'] = 'CVD patient'
-dataset2.loc[dataset2['cholesterol']==1,'cholesterol'] = 'Normal'
-dataset2.loc[dataset2['cholesterol']==2,'cholesterol'] = 'Above Normal'
-dataset2.loc[dataset2['cholesterol']==3,'cholesterol'] = 'Well Above Normal'
-dataset2.loc[dataset2['gluc']==1,'gluc'] = 'Normal'
-dataset2.loc[dataset2['gluc']==2,'gluc'] = 'Above Normal'
-dataset2.loc[dataset2['gluc']==3,'gluc'] = 'Well Above Normal'
+dataset2.loc[dataset2['cholesterol']==1,'cholesterol'] = 'Normal (<200mg/dL)'
+dataset2.loc[dataset2['cholesterol']==2,'cholesterol'] = 'Above Normal (200~239mg/dL)'
+dataset2.loc[dataset2['cholesterol']==3,'cholesterol'] = 'Well Above Normal (>240mg/dL)'
+dataset2.loc[dataset2['gluc']==1,'gluc'] = 'Normal (<99mg/dL)'
+dataset2.loc[dataset2['gluc']==2,'gluc'] = 'Above Normal (100~125mg/dL)'
+dataset2.loc[dataset2['gluc']==3,'gluc'] = 'Well Above Normal (>126mg/dL)'
+dataset2.rename(columns = {'gluc':'Glucose Level'}, inplace = True)
 
 #figure for high blood pressure
-fig1 = px.box(dataset1, y = 'ap_hi', x='cardio', color='cardio') 
-fig2 = px.box(dataset1, y = 'ap_lo', x='cardio', color='cardio')
+fig1 = px.box(dataset1, y = 'systolic pressure', x='cardio', color='cardio') 
+fig2 = px.box(dataset1, y = 'diastolic pressure', x='cardio', color='cardio')
 
 #figure for Smoking (data from heart_2020_cleaned.csv, the other dataset does not show significant relationship on smoking, weird)
 fig3 = go.Figure(data=[go.Table(header=dict(values=['','CVD patient', 'No CVD']),
@@ -86,7 +93,7 @@ fig3 = go.Figure(data=[go.Table(header=dict(values=['','CVD patient', 'No CVD'])
 fig4 = px.histogram(dataset2, x='cardio', color="cholesterol", barmode='group')
 
 #fig for high glucolse
-fig5 = px.histogram(dataset2, x='cardio', color="gluc", barmode='group')
+fig5 = px.histogram(dataset2, x='cardio', color="Glucose Level", barmode='group')
 #fig for Inactivity
 fig6 = px.histogram(dataset1, x='cardio', color="active", barmode='group')
 #fig for Obsease
@@ -177,19 +184,19 @@ risk_suggestions = {
 
 layout = html.Div(children=[
 
-                    html.Div(style={ 'display': 'inline-flex'},
-                        children=[  dcc.Link(html.Button("Risk Factor Analysis",style={'width': '230%','margin-left': '0%','background': 'rgb(0,255,156)','opacity': '70%'}), href="/page2"),
-                                    dcc.Link(html.Button("Location Visualizations",style={'width': '189%','margin-left': '116%','background': 'rgb(0,255,156)','opacity': '70%'}), href="/page4"),]),
+                    html.Div(style={ 'display': 'inline-flex','margin-left': '26%'},
+                        children=[  dcc.Link(html.Button("Risk Factor Analysis"), href="/page2"),
+                                    dcc.Link(html.Button("Location Visualizations"), href="/page4"),]),
                         
                     #1
                     html.Div([
-                                dcc.Checklist(
+                                dcc.Dropdown(
                                     id="risk_factors",
                                     options=[
                                         {"label": l.capitalize(), "value": l}
                                         for l in risk_suggestions.keys()
                                     ],
-                                    value=[]
+                                    value='High blood Pressure'
                                     ),
                                     
                                     html.Div(id = 'suggestions')
@@ -234,13 +241,7 @@ def correlation_plot(cols):
     Input('risk_factors', 'value')
 )
 def give_suggestions(factors):
-    suggestions = []
-    if len(factors)==0:
-        suggestions.append("Your condition is perfect! (This cannot be used as medical advice)")
-        return suggestions
-    for i in factors:
-        suggestions.append(risk_suggestions[i])
-    return html.Div(suggestions)
+    return risk_suggestions[factors]
 
 
 
@@ -251,4 +252,5 @@ def give_suggestions(factors):
 
 
 if __name__ == '__main__':
+    app.layout=layout
     app.run_server(debug=True)
