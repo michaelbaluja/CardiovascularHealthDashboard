@@ -40,12 +40,16 @@ def get_age_statistics(zip: str):
     if county_name.rsplit(' ',1)[-1] == 'County':
         county_name = county_name.rsplit(' ', 1)[0]
     county_df = df_100k[df_100k['County'] == county_name].groupby(['Age', 'Topic']).sum().reset_index()
-    fig = px.bar(county_df, x="Age", color="Topic", 
-                y='Data_Value',
-                title=f"Number of Moratilies in {county_name} County (per 100k) from 1999-2018 (combined)",
+    fig = px.bar(x=county_df["Age"], color=county_df["Topic"], 
+                y=county_df["Data_Value"],
+                labels={'x': 'Age Group', 'y':'Number of Mortalities', 'color':'Heart Disease Type'},
+                title=f"Number of Mortatilies in {county_name} County (per 100k) from 1999-2018 (combined)",
                 barmode='group',
                 height=400, width=800
             )
+    # print(fig.data[0].name)
+    # fig.data[0].name = "Number of Mortatilies"
+    # fig.data[0].hovertemplate = "Number of Mortatilies"
     return fig
     
 def get_trend_statistics(zip: str):
@@ -64,10 +68,11 @@ def get_trend_statistics(zip: str):
     if county_name.rsplit(' ',1)[-1] == 'County':
         county_name = county_name.rsplit(' ', 1)[0]
     county_df = df_100k[(df_100k['County'] == county_name) & 
-        (df_100k['Topic'] == 'Stroke')].sort_values('Year')
-    fig = px.line(county_df, x="Year", color="Age", 
-                y='Data_Value',
-                title=f"Number of Moratilies in {county_name} County (per 100k) every year, 1999-2018",
+        (df_100k['Topic'] == 'Coronary Heart Disease')].sort_values('Year')
+    fig = px.line(x=county_df["Year"], color=county_df["Age"], 
+                y=county_df['Data_Value'],
+                labels={'x': 'Year','y':'Number of Mortalities', 'color':'Age Group'},
+                title=f"Number of Moratilies from Heart Disease in {county_name} County (per 100k) every year, 1999-2018",
                 height=600
             )
     return fig
