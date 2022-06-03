@@ -1,7 +1,6 @@
 from dash import Dash, html, dcc, Input, Output,callback
 import plotly.express as px
 import pandas as pd
-import itertools
 from urllib.request import urlopen
 import json
 import plotly.graph_objects as go
@@ -9,7 +8,9 @@ from sklearn.feature_selection import SelectKBest, chi2
 
 app = Dash(__name__)
 ##################################1
-CATEGORICAL_COLUMNS = ['gender', 'cholesterol', 'smoke', 'alco', 'active']
+
+CATEGORICAL_COLUMNS = ['gender', 'High cholesterol', 'smoke', 'alco', 'active','High glucose']
+
 def get_categorical_table()-> pd.DataFrame:
     """Returns a section of the table with categorical variables only
     Returns
@@ -18,7 +19,15 @@ def get_categorical_table()-> pd.DataFrame:
     """
     # read the kaggle dataset
     df = pd.read_csv('../../data/kaggle_cleaned.csv')
-    return df[[*CATEGORICAL_COLUMNS, 'cardio']]
+    dummies = pd.get_dummies(df['cholesterol'],prefix='cholesterol')
+    res = pd.concat([df, dummies], axis=1)
+    res = res.drop(['cholesterol','cholesterol_1','cholesterol_3'],axis=1)
+    res = res.rename(columns = {"cholesterol_2":"High cholesterol"})
+    dummies = pd.get_dummies(df['gluc'],prefix='gluc')
+    res = pd.concat([res, dummies], axis=1)
+    res = res.drop(['gluc','gluc_1','gluc_3'], axis=1)
+    res = res.rename(columns = {"gluc_2":"High glucose"})
+    return res[[*CATEGORICAL_COLUMNS, 'cardio']]
 
 df = get_categorical_table()
 
@@ -40,15 +49,15 @@ def compute_importance(x_vars) -> list:
     -------
     list: importance scores for each x with respect to y
     """
-    #assert isinstance(x_vars, list)
-    #assert all([(isinstance(x, str) and x in df.columns) for x in x_vars])
-    if x_vars!=None:
-        x_df = df[[*x_vars]]
-        y_ds = df['cardio']
+    assert isinstance(x_vars, list)
+    assert all([(isinstance(x, str) and x in df.columns) for x in x_vars])
 
-        fs = SelectKBest(score_func=chi2, k='all')
-        fs.fit(x_df, y_ds)
-        return fs.scores_
+    x_df = df[[*x_vars]]
+    y_ds = df['cardio']
+
+    fs = SelectKBest(score_func=chi2, k='all')
+    fs.fit(x_df, y_ds)
+    return fs.scores_
    
 
     
@@ -235,7 +244,7 @@ layout = html.Div(children=[
 #1
 @callback(
     Output('corr-plot', 'figure'),
-     Input('corr-factors', 'value')
+     Input('corr-factors', 'value'), prevent_initial_call=True
  )
 def correlation_plot(cols):
     """Correlation between the selected factors and cardiovascular disease risk.
