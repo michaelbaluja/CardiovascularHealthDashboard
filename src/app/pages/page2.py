@@ -212,8 +212,9 @@ layout = html.Div(children=[
                     html.Div(style={ 'display': 'inline-flex'},
                         children=[  dcc.Link(html.Button("Risk Factor Analysis",style={'width': '230%','margin-left': '0%','background': 'rgb(0,255,156)','opacity': '70%'}), href="/page2"),
                                     dcc.Link(html.Button("Location Visualizations",style={'width': '189%','margin-left': '116%','background': 'rgb(0,255,156)','opacity': '70%'}), href="/page4"),]),
-                        
                     #1
+                    html.Br(),
+                    html.H3("Select Risk Factor", style={"margin-left":"15px"}),
                     html.Div([
                                 dcc.Dropdown(
                                     id="risk_factors",
@@ -221,17 +222,23 @@ layout = html.Div(children=[
                                         {"label": l.capitalize(), "value": l}
                                         for l in risk_suggestions.keys()
                                     ],
-                                    value='High blood Pressure'
+                                    value='High blood Pressure',
+                                    style={"width":"200px", "margin-left":"7px"}
                                     ),
                                     
-                                    html.Div(id = 'suggestions')
+                                    html.Div(style={"margin-top": "3%",
+                                                "margin-bottom": "3%",
+                                                "margin-right": "3%",
+                                                "margin-left":"3%"}, id = 'suggestions'),
                                 ]),
+                    html.Br(),
                     #2
                     html.Div(children=[
-                                    html.Label('Select Risk Factors'),
+                                    html.H3("Correlation Analysis", style={"margin-left":"15px"}),
                                     dcc.Dropdown(get_dropdown_options(),
                                                     multi=True,
                                                     id='corr-factors',
+                                                    style={"width":"800px", "margin-left":"7px"}
                                                 ),
                                 html.Div(dcc.Graph(
                                         id='corr-plot',
@@ -260,7 +267,7 @@ def correlation_plot(cols):
      """
    
     return px.bar(x=cols, y=compute_importance(cols), title='Correlation',
-         labels={'x': 'Risk Factors', 'y':'Correlation'}, width=500)
+         labels={'x': 'Risk Factors', 'y':'Correlation'})
 
 #2
 @callback(

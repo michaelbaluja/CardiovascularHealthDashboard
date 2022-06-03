@@ -131,14 +131,15 @@ body, html {
 }
 
 .graphs{
-  width:66%
+  text-align: right;
+  width:90%
 }
 
 .writings{
-  width: 30%;
+  /* width: 30%;
   position: absolute;
   left: 69%;
   top: 25%;
-  background: rgb(0,255,156);
+  background: rgb(0,255,156); */
   font-size: 17px;
 }
