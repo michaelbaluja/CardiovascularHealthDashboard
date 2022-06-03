@@ -25,8 +25,6 @@ disclaimer_style = {
 layout = html.Div(
     children=html.Div(children=[html.H1("Risk Evaluator - Detailed", style=header_style),
         html.Div(children=[html.P(disclaimer_text, style=disclaimer_style)]),
-        html.P("Please fill the following details", style={'font-size': 'x-large','position': 'absolute',
-    'top': '11%','left': '1%'}),
         html.Div(className='HeartBeat', style={'top': '61%', 'left': '8%'}, children=[
         
         

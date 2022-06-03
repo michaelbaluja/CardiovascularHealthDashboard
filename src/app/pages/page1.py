@@ -27,7 +27,7 @@ disclaimer_text = "We do not claim to be medical professionals.\n Please consult
 layout = html.Div(
     children=html.Div(children=[html.H1("Risk Evaluator - General",style=header_style),
     html.Div(className="disclaimer-2", children=[html.P(disclaimer_text,style=disclaimer_style)]),
-    html.P("Please fill the following details", style={'font-size': 'x-large'}),
+    
     html.Div(className='HeartBeat', style={'top': '56%', 'left': '8%'}, children=[
         html.Div(className='app-controls-block1', children=[
             html.P("Age"),
