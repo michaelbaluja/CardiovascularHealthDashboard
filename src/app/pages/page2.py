@@ -17,7 +17,7 @@ def get_categorical_table()-> pd.DataFrame:
     pandas.DataFrame
     """
     # read the kaggle dataset
-    df = pd.read_csv('models/kaggle_cleaned.csv')
+    df = pd.read_csv('../../data/kaggle_cleaned.csv')
     return df[[*CATEGORICAL_COLUMNS, 'cardio']]
 
 df = get_categorical_table()
@@ -103,76 +103,83 @@ fig7 = px.box(dataset1, y = 'BMI', x='cardio', color='cardio')
 
 
 risk_suggestions = {
-    'High blood Pressure':html.Div([
-        html.P(['''High blood pressure (hypertension) is one of the most 
-        important risk factors for Cardiovascular disease. The ideal blood 
-        pressure is usually considered to be between 90/60mmHg and 120/80mmHg.
-        Blood pressure readings between 120/80mmHg and 140/90mmHg could mean 
-        you're at risk of developing high blood pressure if you do not take 
-        steps to keep your blood pressure under control. ''']),
-        html.P(['These lifestyle changes can help prevent and lower high blood pressure:',html.Br(),
-        '· reduce the amount of salt you eat and have a generally healthy diet',html.Br(),
-        "· exercise regularly",html.Br(),
-        "· cut down on caffeine",html.Br(),
-        dcc.Graph(figure=fig1),
-        dcc.Graph(figure=fig2)
-        ]),
+    'High blood Pressure':html.Div(children=[
+                                     html.Div(className='graphs',children=[dcc.Graph(figure=fig1),
+                                                        dcc.Graph(figure=fig2)]),
+        
+                                    html.Div(className='writings',children=[
+                                                html.P(['''High blood pressure (hypertension) is one of the most 
+                                                important risk factors for Cardiovascular disease. The ideal blood 
+                                                pressure is usually considered to be between 90/60mmHg and 120/80mmHg.
+                                                Blood pressure readings between 120/80mmHg and 140/90mmHg could mean 
+                                                you're at risk of developing high blood pressure if you do not take 
+                                                steps to keep your blood pressure under control. ''']),
+                                                html.P(['These lifestyle changes can help prevent and lower high blood pressure:',html.Br(),
+                                                '· reduce the amount of salt you eat and have a generally healthy diet',html.Br(),
+                                                "· exercise regularly",html.Br(),
+                                                "· cut down on caffeine",html.Br()]),
+       ]),                            
     ]),
-    'Smoking':html.Div([
-        html.P(['''Smoking and other tobacco use is also a significant 
-        risk factor for CVD. The harmful substances in tobacco can damage
-        and narrow your blood vessels. If you smoke, you should try to give
-        up as soon as possible.''']),
-        dcc.Graph(figure=fig3),
-        html.P(['Odds-ratio = 2.16. Smoking siginificantly increases the probability of getting a heart disease.']),
+    'Smoking':html.Div(children=[   html.Div(dcc.Graph(figure=fig3),className='graphs'),
+
+
+                                    html.Div(className='writings',children=[
+                                                html.P(['''Smoking and other tobacco use is also a significant 
+                                                risk factor for CVD. The harmful substances in tobacco can damage
+                                                and narrow your blood vessels. If you smoke, you should try to give
+                                                up as soon as possible.''']),
+                                                
+                                                html.P(['Odds-ratio = 2.16. Smoking siginificantly increases the probability of getting a heart disease.']),
+                                        ]),
+                                ]),
+    'High Cholesterol':html.Div(children=[
+                                            html.Div(dcc.Graph(figure=fig4),className='graphs'),
+
+
+                                            html.Div(className='writings',children=[html.P(['''Cholesterol is a fatty substance found in the blood. 
+                                            It's mainly caused by eating fatty food, not exercising enough, 
+                                            being overweight, smoking and drinking alcohol. It can also run 
+                                            in families.Too much cholesterol can block your blood vessels. 
+                                            It makes you more likely to have heart problems or a stroke. 
+                                            You can lower your cholesterol by eating healthily and getting more exercise. 
+                                            Some people also need to take medicine.''']),])
+                                
+                            ]),
+    'Diabetes':html.Div(children=[      html.Div(dcc.Graph(figure=fig5),className='graphs'),
+
+                                        html.Div(className='writings',children=[html.P(['''Diabetes is a lifelong condition that causes your blood sugar level to become too high. 
+                                        High blood sugar levels can damage the blood vessels, making them more likely to become narrowed.
+                                        If you're diagnosed with diabetes, you'll need to eat healthily, take regular exercise and carry 
+                                        out regular blood tests to ensure your blood glucose levels stay balanced.''']),
+                                        html.Br(),
+                                        html.P(['''People diagnosed with type 1 diabetes also require regular insulin injections for the 
+                                        rest of their life. As type 2 diabetes is a progressive condition, medicine may eventually be required, 
+                                        usually in the form of tablets.''']),
+                                        ])
+                                    ]),
+    'Inactivity':html.Div(children=[    html.Div(dcc.Graph(figure=fig6),className='graphs'),
+                                        html.Div(className='writings',children=[ html.P(['''If you don't exercise regularly, it's more likely that you'll have high blood pressure, 
+                                                high cholesterol levels and be overweight. All of these are risk factors for CVD. Exercising regularly 
+                                                will help keep your heart healthy. When combined with a healthy diet, exercise can also help you maintain 
+                                                a healthy weight.
+                                                '''])
+                                            ]),
+                            
+                        ]),
+    'Obese':html.Div(children=[ html.Div(dcc.Graph(figure=fig7),className='graphs'),
+                                html.Div(className='writings',children=[html.P(['The best way to treat obesity is to eat a healthy reduced-calorie diet and exercise regularly.',html.Br(),
+                                    'To do this, you should:',html.Br(),
+                                    '·Eat a balanced calorie-controlled diet as recommended by a GP or weight loss management health professional (such as a dietitian) join a local weight loss group',html.Br(),
+                                    '·Take up activities such as fast walking, jogging, swimming or tennis for 150 to 300 minutes (2.5 to 5 hours) a week.',html.Br(),
+                                    '·Eat slowly and avoid situations where you know you could be tempted to overeat',html.Br(),
+                                    '·You may also benefit from receiving psychological support from a trained healthcare professional to help change the way you think about food and eating.',html.Br(),
+                                    html.Br(),
+                                    'If lifestyle changes alone do not help you lose weight, a medicine called orlistat may be recommended.'
+                                    ]),
+                                ])
+        
     ]),
-    'High Cholesterol':html.Div([
-        html.P(['''Cholesterol is a fatty substance found in the blood. 
-        It's mainly caused by eating fatty food, not exercising enough, 
-        being overweight, smoking and drinking alcohol. It can also run 
-        in families.Too much cholesterol can block your blood vessels. 
-        It makes you more likely to have heart problems or a stroke. 
-        You can lower your cholesterol by eating healthily and getting more exercise. 
-        Some people also need to take medicine.''']),
-        dcc.Graph(figure=fig4)
-    ]),
-    'Diabetes':html.Div([
-        html.P(['''Diabetes is a lifelong condition that causes your blood sugar level to become too high. 
-        High blood sugar levels can damage the blood vessels, making them more likely to become narrowed.
-        If you're diagnosed with diabetes, you'll need to eat healthily, take regular exercise and carry 
-        out regular blood tests to ensure your blood glucose levels stay balanced.''']),
-        html.Br(),
-        html.P(['''People diagnosed with type 1 diabetes also require regular insulin injections for the 
-        rest of their life. As type 2 diabetes is a progressive condition, medicine may eventually be required, 
-        usually in the form of tablets.''']),
-        dcc.Graph(figure=fig5)
-    ]),
-    'Inactivity':html.Div([
-        html.P(['''If you don't exercise regularly, it's more likely that you'll have high blood pressure, 
-    high cholesterol levels and be overweight. All of these are risk factors for CVD. Exercising regularly 
-    will help keep your heart healthy. When combined with a healthy diet, exercise can also help you maintain 
-    a healthy weight.
-    ''']),
-        dcc.Graph(figure=fig6)
-    ]),
-    'Obsease':html.Div([
-        html.P(['The best way to treat obesity is to eat a healthy reduced-calorie diet and exercise regularly.',html.Br(),
-        'To do this, you should:',html.Br(),
-        '·Eat a balanced calorie-controlled diet as recommended by a GP or weight loss management health professional (such as a dietitian) join a local weight loss group',html.Br(),
-        '·Take up activities such as fast walking, jogging, swimming or tennis for 150 to 300 minutes (2.5 to 5 hours) a week.',html.Br(),
-        '·Eat slowly and avoid situations where you know you could be tempted to overeat',html.Br(),
-        '·You may also benefit from receiving psychological support from a trained healthcare professional to help change the way you think about food and eating.',html.Br(),
-        html.Br(),
-        'If lifestyle changes alone do not help you lose weight, a medicine called orlistat may be recommended.'
-        ]),
-        dcc.Graph(figure=fig7)
-    ]),
-    'Alcohol':html.Div([
-        html.P(['''
-        Excessive alcohol consumption can also increase your cholesterol and blood pressure levels, 
-        and contribute to weight gain. 
-        ''']) #no figure for alcohol drinking
-    ])
+    
 }
 
 
@@ -184,9 +191,9 @@ risk_suggestions = {
 
 layout = html.Div(children=[
 
-                    html.Div(style={ 'display': 'inline-flex','margin-left': '26%'},
-                        children=[  dcc.Link(html.Button("Risk Factor Analysis"), href="/page2"),
-                                    dcc.Link(html.Button("Location Visualizations"), href="/page4"),]),
+                    html.Div(style={ 'display': 'inline-flex'},
+                        children=[  dcc.Link(html.Button("Risk Factor Analysis",style={'width': '230%','margin-left': '0%','background': 'rgb(0,255,156)','opacity': '70%'}), href="/page2"),
+                                    dcc.Link(html.Button("Location Visualizations",style={'width': '189%','margin-left': '116%','background': 'rgb(0,255,156)','opacity': '70%'}), href="/page4"),]),
                         
                     #1
                     html.Div([
@@ -206,11 +213,13 @@ layout = html.Div(children=[
                                     html.Label('Select Risk Factors'),
                                     dcc.Dropdown(get_dropdown_options(),
                                                     multi=True,
-                                                    id='corr-factors'
+                                                    id='corr-factors',
                                                 ),
-                                    dcc.Graph(
+                                html.Div(dcc.Graph(
                                         id='corr-plot',
-                                    )
+                                    ),className="graphs"),
+                                html.Div(html.P("Write something"),className="writings")
+                                    
                                 ]),
                     
                     

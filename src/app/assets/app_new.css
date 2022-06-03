@@ -72,7 +72,7 @@ body, html {
   left: 67%;
   /* top: 12%; */
   cursor: pointer;
-  margin-top: 4%;
+  margin-top: 7%;
 }
 
 .inner {
@@ -103,4 +103,17 @@ body, html {
   font-size: xxx-large;
   font-weight: 900;
 
+}
+
+.graphs{
+  width:66%
+}
+
+.writings{
+  width: 30%;
+  position: absolute;
+  left: 69%;
+  top: 25%;
+  background: rgb(0,255,156);
+  font-size: 17px;
 }

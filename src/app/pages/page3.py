@@ -5,11 +5,11 @@ from utils.validation import _convert_imp_metr_height, _convert_imp_metr_weight
 
 
 layout = html.Div(
-
-    children=html.Div(children=[
+   
+    children=html.Div(children=[html.H1("Heart Disease Risk Prediction Model",style={'margin-left': '23%'}),
     
         
-        html.Div(className='HeartBeat', style={'top': '48%', 'left': '20%'}, children=[
+        html.Div(className='HeartBeat', style={'top': '56%', 'left': '20%'}, children=[
         html.P("PLEASE FILL OUT THE FOLLOWING DETAILS", style={
                'color': 'rgb(0, 255, 156)', 'font-size': 'x-large'}),
         html.Div(className='app-controls-block', children=[
@@ -57,9 +57,8 @@ layout = html.Div(
                 min=20,
                 step=1
             ),
-        ]), ]),
-        html.Div(className='HeartBeat', style={'top': '50%'}, children=[
-            html.Div(className='app-controls-block', children=[
+        ]),
+        html.Div(className='app-controls-block', children=[
                 html.P("Weight (Pounds)"),
                 dcc.Input(
                     className='app-input',
@@ -69,6 +68,9 @@ layout = html.Div(
                     step=0.1
                 ),
             ]),
+             ]),
+        html.Div(className='HeartBeat', style={'top': '50%'}, children=[
+            
             html.Div(className='app-controls-block', children=[
                 html.P("Do you Smoke?", ),
                 dcc.Dropdown(id='smoke',

@@ -33,9 +33,7 @@ layout = html.Div(children=[
                         
                         
                     #2[
-                    html.H3("The map shows the number of people per 100k that have suffered either a Stroke or Coronary Heart Disease by county in the United States.\
-                        The two available age groups are 35-64 and 65+. The values are the annual average over the last 20 years."),
-                    html.Div([
+                    html.Div(className='graphs',children=[
                                     dcc.Dropdown(['Ages 35-64 years', 'Ages 65 years and older'],
                                                 'Ages 35-64 years',
                                                 id='age'
@@ -49,7 +47,10 @@ layout = html.Div(children=[
                                     dcc.Graph(
                                         id='map',
                                     )
-                                ])
+                                ]),
+                    html.H3("The map shows the number of people per 100k that have suffered either a Stroke or Coronary Heart Disease by county in the United States.\
+                        The two available age groups are 35-64 and 65+. The values are the annual average over the last 20 years.",className="writings",style={'font-size': '29px'}),
+                    
                     #3
                         
                         

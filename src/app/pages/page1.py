@@ -6,8 +6,8 @@ import pandas as pd
 import numpy as np
 
 layout = html.Div(
-
-    children=html.Div(children=[html.Div(className='HeartBeat', style={'top': '38%', 'left': '20%'}, children=[
+    
+    children=html.Div(children=[html.H1("Heart Disease Risk Prediction Model",style={'margin-left': '23%'}),html.Div(className='HeartBeat', style={'top': '38%', 'left': '20%'}, children=[
         html.P("PLEASE FILL OUT THE FOLLOWING DETAILS", style={
                'color': 'rgb(0, 255, 156)', 'font-size': 'x-large'}),
         html.Div(className='app-controls-block', children=[
@@ -36,7 +36,7 @@ layout = html.Div(
                 step=0.1
             ),
         ]), ]),
-        html.Div(className='HeartBeat', style={'top': '40%'}, children=[
+        html.Div(className='HeartBeat', style={'top': '47.5%'}, children=[
             html.Div(className='app-controls-block', children=[
                 html.P("Weight (Pounds)"),
                 dcc.Input(
