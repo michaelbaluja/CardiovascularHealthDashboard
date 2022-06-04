@@ -35,13 +35,15 @@ layout = html.Div(
                 id='age',
                 type='number',
                 min=18,
-                step=1
+                step=1,
+                value=22
             ),
         ]),
         html.Div(className='app-controls-block', children=[
             html.P("Gender", ),
             dcc.Dropdown(id='genderdrop',
                          options=gender_options,
+                         value='1'
                          ),
         ]),
         html.Div(className='app-controls-block', children=[
@@ -51,7 +53,8 @@ layout = html.Div(
                 id='height',
                 type='number',
                 min=0,
-                step=0.1
+                step=0.1,
+                value=70
             ),
         ]),
         html.Div(className='app-controls-block', children=[
@@ -61,7 +64,8 @@ layout = html.Div(
                     id='weight',
                     type='number',
                     min=0,
-                    step=1
+                    step=1,
+                    value=170
                 ),
             ]),
         
@@ -74,12 +78,14 @@ layout = html.Div(
                 html.P("Do you Smoke?", ),
                 dcc.Dropdown(id='smoke',
                              options=yes_no_options,
+                             value='1'
                              ),
             ]),
             html.Div(className='app-controls-block', children=[
                 html.P("Do you Drink?", ),
                 dcc.Dropdown(id='drink',
                              options=yes_no_options,
+                             value='1'
                              ),
             ]),
             html.Div(className='app-controls-block', children=[
@@ -89,7 +95,8 @@ layout = html.Div(
                 id='lowbp',
                 type='number',
                 min=20,
-                step=1
+                step=1,
+                value=80
             ),
         ]),
         html.Div(className='app-controls-block', children=[
@@ -99,7 +106,8 @@ layout = html.Div(
                 id='highbp',
                 type='number',
                 min=50,
-                step=1
+                step=1,
+                value=100
             ),
         ]),
 
@@ -112,6 +120,7 @@ layout = html.Div(
                 html.P("Do you Exercise Regularly?", ),
                 dcc.Dropdown(id='exercise',
                              options=yes_no_option_exercise,
+                             value='1'
                              ),
             ]),
 
@@ -119,6 +128,7 @@ layout = html.Div(
                 html.P("Cholestrol level", ),
                 dcc.Dropdown(id='cholestrol',
                             options=['Normal(<200mg/dL)','Above Normal(200~239mg/dL)','Abnormal(>240mg/dL)'],
+                            value='Normal(<200mg/dL)'
                             ),
             ]),
             html.Div(className='app-controls-block', children=[
@@ -126,7 +136,8 @@ layout = html.Div(
                 dcc.Dropdown(
                     className='app-input',
                     id='glucose',
-                    options=['Normal(<99mg/dL)', 'Above Normal(100~125mg/dL)','Abnormal (>126mg/dL)']
+                    options=['Normal(<99mg/dL)', 'Above Normal(100~125mg/dL)','Abnormal (>126mg/dL)'],
+                    value='Normal(<99mg/dL)'
                 ),
             ]),
         ]),
