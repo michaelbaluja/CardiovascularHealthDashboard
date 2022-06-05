@@ -1,214 +1,57 @@
-from layout_main import run_standalone_app
-from dash.dependencies import Input, Output
-from dash import html
-from dash import dcc
-import pandas as pd
-import plotly.express as px
+from dash import Dash, dcc, html, Input, Output, callback
+import dash_bootstrap_components as dbc
+import dash_extensions as de
+from pages import page0,page1, page2, page3,page4
 
-
-def read_data(filepath):
-    return pd.read_csv(filepath)
-
-
-def clean_df(df):
-    '''
-    Cleans dataframe IN PLACE
-    '''
-    assert isinstance(df, pd.DataFrame)
-
-    df['Data_Value'] = df["Data_Value"].str.replace(",", "").astype(float)
-    df.drop('StratificationCategory1', axis=1, inplace=True)
-    df.rename(columns={'Stratification1': 'Age Group', 'LocationAbbr': 'State',
-                       'LocationDesc': 'County'}, inplace=True)
-
-
-def layout():
-    return html.Div(id='dash-view-body', className='app-body', children=[
-        html.Div(
-            id='dash-view-container',
-            children=[
-                html.Div(
-                    id='dash-view-graph-container-1',
-                    children=[
-                        dcc.Graph(id='pie-plot')
-                    ]
-                ),
-                html.Div(
-                    id='dash-view-graph-container-2',
-                    children=[
-                        dcc.Graph(id='pie-plot-2')
-                    ]
-                ),
-            ]
-        ),
-        html.Div(id='dash-view-control-tabs', className='control-tabs', children=[
-            dcc.Tabs(id='dash-view-tabs', value='what-is', children=[
-                dcc.Tab(
-                    label='About',
-                    value='what-is',
-                    children=html.Div(className='control-tab', children=[
-                        html.H4(className='what-is',
-                                children='Cardiovasular disease Analysis'),
-                        html.P('Text to be added'),
-                    ])
-                ),
-                dcc.Tab(
-                    label='General',
-                    value='data',
-                    children=html.Div(className='general-tab', children=[
-                        html.Div(className='app-controls-block', children=[
-                            html.P("Name", style={'margin-left': '15px'}),
-                            dcc.Input(
-                                className='app-input',
-                                id='user-name',
-                            ),
-                            html.Br(),
-                            html.Div(className='app-controls-block', children=[
-                                html.Div(style={'float': 'left'}, children=[
-                                    #html.P("Age", style={'margin-left': '15px'}),
-                                    html.P("State", style={
-                                           'margin-left': '15px'}),
-                                    dcc.Dropdown(id='general-state',
-                                                 options=state_labels,
-                                                 ),
-                                    # dcc.Input(
-                                    #     className='app-input',
-                                    #     id='user-age',
-                                    # ),
-                                ]),
-                                html.Div(style={'float': 'right'}, children=[
-                                    html.P("Do you smoke?", style={
-                                        'margin-left': '15px'}),
-                                    dcc.RadioItems(
-                                        id='smoke-select',
-                                        options=[
-                                            {
-                                                'label': 'Yes',
-                                                'value': 'y'
-                                            },
-                                            {
-                                                'label': 'No',
-                                                'value': 'n'
-                                            }
-                                        ],
-                                    ),
-                                ]),
-                            ]),
-                            html.Br(),
-                            html.Br(),
-                            html.Div(className='app-controls-block', children=[
-                                html.Div(style={'float': 'left'}, children=[
-                                    #html.P("Weight", style={'margin-left': '15px'}),
-                                    html.P("County", style={
-                                        'margin-left': '15px'}),
-                                    dcc.Dropdown(id='general-county',
-                                                 #options = state_labels,
-                                                 ),
-                                    # dcc.Input(
-                                    #     className='app-input',
-                                    #     id='user-weight',
-                                    # ),
-                                    html.Br(),
-                                    html.Br(),
-                                ]),
-                                html.Div(style={'float': 'right'}, children=[
-                                    html.Br(),
-                                    html.P("Are you active?", style={
-                                        'margin-left': '15px'}),
-                                    dcc.RadioItems(
-                                        id='active-select',
-                                        options=[
-                                            {
-                                                'label': 'Yes',
-                                                'value': 'y'
-                                            },
-                                            {
-                                                'label': 'No',
-                                                'value': 'n'
-                                            }
-                                        ],
-                                    ),
-                                    html.Br(),
-                                    html.Br(),
-                                ]),
-                            ]),
-                            html.Br(),
-                            html.Br(),
-                            html.Div(className='app-controls-block', children=[
-                                html.P("Height"),
-                                dcc.Input(
-                                    className='app-input',
-                                    id='user-height',
-                                ),
-                                html.Br(),
-                                html.Br(),
-                            ]),
-                            html.A(
-                                children=html.Button(
-                                    "Submit",
-                                    id='dash-view-submit-data',
-                                    className='control-download',
-                                ),
-                            )
-                        ]),
-                    ])
-                ),
-                dcc.Tab(
-                    label='Detailed',
-                    children=html.Div(className='control-tab', children=[
-                        html.Div(
-                            id='dash-view-entry-dropdown-container',
-                            className='app-controls-block',
-                            children=[]
-                        ),
-                        html.Br(),
-                        html.Div(
-                            id='dash-view-sel-or-cov-container',
-                            children=[]),
-                    ]),
-                ),
-            ]),
-        ])
-    ])
-
-
-def header_colors():
-    return {
-        'bg_color': '#2596be',
-        'font_color': 'white'
-    }
-
-
-def callbacks(_app):
-    @_app.callback(
-        Output(component_id='general-county', component_property='options'),
-        Input(component_id='general-state', component_property='value')
-    )
-    def update_counties(input_value):
-        return df.groupby('State').get_group(input_value)['County'].unique()
-
-    @_app.callback(
-        Output(component_id='pie-plot', component_property='figure'),
-        [Input(component_id='general-county', component_property='value'),
-         Input(component_id='general-state', component_property='value'),
-         Input(component_id='dash-view-submit-data', component_property='n_clicks')]
-    )
-    def plot_pie_graph(county_value, state_value, n_clicks):
-        if n_clicks != 0:
-            reduced_df = df.groupby(['State', 'County', 'Data_Value_Unit', 'Topic']).sum().loc[
-                state_value, county_value, 'per 100,000']
-            fig = px.pie(df, values='Data_Value', names='Topic', title='Types of Heart Disease (per 100,000)',
-                         width=400, height=375)
-            return fig
-
-
-df = read_data('../../data/Trends_heart_disease.csv')
-clean_df(df)
-
-state_labels = [{'label': i, 'value': i} for i in df['State'].unique()]
-
-app = run_standalone_app(layout, callbacks, header_colors, __file__)
+app = Dash(__name__, suppress_callback_exceptions=True)
 server = app.server
 
+url="https://assets8.lottiefiles.com/packages/lf20_zmf796.json"
+options = dict(loop=True, autoplay=True, rendererSettings=dict(preserveAspectRatio='xMidYMid slice'))
+
+app.layout = html.Div([
+    dcc.Location(id='url', refresh=True),
+    html.Div(id='page-content')
+])
+
+description = "This dashboard aims to provide users with information about their current heart health condition with a personalized \
+    risk assessment for users, keeping their privacy in mind. It provides visualizations analyzing the relationship between \
+    several risk factors and cardiovascular diseases."
+
+index_page =html.Div(children=[
+                    #title
+                    html.Div(className="app-header", children=[html.H1("Cardiovascular Health Dashboard")]),
+                    #style={'margin-left': '12%','opacity':'70%'}),style={'background': 'rgb(0,255,156)','opacity':'38%',
+
+                    #description
+                    html.Div(html.H5(description),style={'width': '30%',' height':' 43%','margin-top': '6%','margin-left': '10%'}),
+
+                    html.Br(),
+                    html.Div(
+                    children=[  
+                        html.Div(style={'left':'67%', 'width':' 37%'},className="HeartBeat",children=[
+                        html.Div(de.Lottie(options=options, url=url)),
+                        dcc.Link(html.Button("Get Started",style={'width': '44%','margin-left': '29.25%'}), href="/page0", refresh=True),
+                ])
+])
+])
+
+@callback(Output('page-content', 'children'),
+              Input('url','pathname'))
+def display_page(pathname):
+    if pathname=='/page0':
+        return page0.layout
+    elif pathname == '/page1':
+        return page1.layout
+    elif pathname=='/page2':
+       return page2.layout
+    elif pathname=='/page3':
+       return page3.layout
+    elif pathname=='/page4':
+        return page4.layout
+    else:
+        return index_page
+    
+
 if __name__ == '__main__':
-    app.run_server(debug=True, port=5006)
+    app.run_server(debug=True)
