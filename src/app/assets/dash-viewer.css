@@ -114,7 +114,7 @@
 #user-name{
     display: inline-block;
     width: 300px;
-    margin-left: 20px;
+    margin-left: 0px;
 }
 
 #user-name, #fasta-entry-dropdown, #selection-or-coverage, #sel-slider-or-input, #translation-alphabet, #sel-color, #mouse-sel-or-subpart-sel, #coverage-color, #coverage-bg-color, #coverage-tooltip, #coverage-underscore {
