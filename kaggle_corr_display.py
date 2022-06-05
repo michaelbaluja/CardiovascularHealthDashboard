@@ -4,7 +4,8 @@ import pandas as pd
 import itertools
 
 app = Dash(__name__)
-data = pd.read_csv("kaggle_cleaned.csv").drop(columns=['id', 'Unnamed: 0.1', 'Unnamed: 0']).corr()['cardio']
+data = pd.read_csv("kaggle_cleaned.csv").drop(
+    columns=['id', 'Unnamed: 0.1', 'Unnamed: 0']).corr()['cardio']
 print(data.drop('cardio').index.tolist())
 
 app.layout = html.Div(children=[
@@ -19,6 +20,7 @@ app.layout = html.Div(children=[
         id='corr-plot',
     )
 ])
+
 
 @app.callback(
     Output('corr-plot', 'figure'),

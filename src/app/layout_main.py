@@ -1,9 +1,7 @@
-import base64
-import os
-
 import dash
 from dash import dcc
 from dash import html
+
 
 def run_standalone_app(
         layout,
