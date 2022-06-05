@@ -24,6 +24,17 @@ pip install -r requirements.txt
 ```
 
 ### Use
+To launch the dashboard application, launch the `app.py` file from the `src/app` directory.
+The application includes a `--debug` argument for running the application in debug mode.
+```bash
+cd src/app
+
+python app.py # for running without debug mode
+python app.py --debug # for running in debug mode
+```
+
+The application will then return an IP address for the application. Simply paste
+the address in your web browser to load the dashboard.
 
 ## Documentation
 The full documentation for the dashboard is available on [Read the Docs](https://cardiovascular-health-dashboard.readthedocs.io/en/latest/)
