@@ -315,13 +315,6 @@ def give_suggestions(factors):
     return risk_suggestions[factors]
 
 
-
-
-#4
-
-
-
-
 if __name__ == '__main__':
     app.layout=layout
     app.run_server(debug=True)
