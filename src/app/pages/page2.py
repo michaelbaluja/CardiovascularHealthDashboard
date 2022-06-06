@@ -153,13 +153,13 @@ risk_suggestions = {
                             'Useful Links',
                             html.Br(),
                             html.A(
-                                'https://www.cdc.gov/diabetes/library/features/diabetes-and-heart.html',
+                                'Diabetes and Your Heart (Info Guide) - CDC',
                                 href='https://www.cdc.gov/diabetes/library/features/diabetes-and-heart.html',
                                 target='_blank'
                             ),
                             html.Br(),
                             html.A(
-                                'https://www.diabetes.org/diabetes/cardiovascular-disease',
+                                'Diabetes and High Blood Pressure (Info Guide) - ADA',
                                 href='https://www.diabetes.org/diabetes/cardiovascular-disease',
                                 target='_blank'
                             ),
@@ -204,13 +204,13 @@ risk_suggestions = {
                         [
                             'Useful Links', html.Br(),
                             html.A(
-                                "https://www.cdc.gov/bloodpressure/prevent.html'",
-                                href='https://www.cdc.gov/bloodpressure/prevent.html',
+                                "Prevent and Manage High Blood Pressure (Landing Page) - CDC",
+                                href='https://www.cdc.gov/bloodpressure/prevent_manage.htm',
                                 target="_blank"
                             ),
                             html.Br(),
                             html.A(
-                                "https://www.cdc.gov/bloodpressure/index.htm",
+                                "High Blood Pressure (Landing Page) - CDC",
                                 href='https://www.cdc.gov/bloodpressure/index.htm',
                                 target="_blank"
                             ),
@@ -255,13 +255,13 @@ risk_suggestions = {
                         [
                             'Useful Links', html.Br(),
                             html.A(
-                                "https://www.cdc.gov/tobacco/data_statistics/sgr/50th-anniversary/pdfs/fs_smoking_CVD_508.pdf",
+                                "Smoking and Cardiovascular Disease (Guide) - CDC",
                                 href='https://www.cdc.gov/tobacco/data_statistics/sgr/50th-anniversary/pdfs/fs_smoking_CVD_508.pdf',
                                 target="_blank"
                             ),
                             html.Br(),
                             html.A(
-                                "https://www.cdc.gov/tobacco/quit_smoking/index.htm",
+                                "Quit Smoking (Landing Page) - CDC",
                                 href='https://www.cdc.gov/tobacco/quit_smoking/index.htm',
                                 target="_blank"
                             ),
@@ -297,13 +297,13 @@ risk_suggestions = {
                         [
                             'Useful Links', html.Br(),
                             html.A(
-                                "https://www.cdc.gov/dhdsp/data_statistics/fact_sheets/fs_state_cholesterol.htm",
+                                "High Cholesterol & Cardiovascular Disease (Fact Sheet) - CDC",
                                 href='https://www.cdc.gov/dhdsp/data_statistics/fact_sheets/fs_state_cholesterol.htm',
                                 target="_blank"
                             ),
                             html.Br(),
                             html.A(
-                                "https://www.cdc.gov/cholesterol/prevention.htm",
+                                "Preventing High Cholesterol (Guide) - CDC",
                                 href='https://www.cdc.gov/cholesterol/prevention.htm',
                                 target="_blank"
                             ),
@@ -341,7 +341,7 @@ risk_suggestions = {
                 [
                     'Useful Links', html.Br(),
                     html.A(
-                        "Link to CDC Resource",
+                        "Physical Activity (Fact Sheet) - CDC",
                         href='''https://www.cdc.gov/chronicdisease/resources/publications/factsheets/physical-activity.htm#:
                             ~:text=Not%20getting%20enough%20physical%20activity%20can%20lead%20to%20heart%20disease,cholesterol%2C%20a
                             nd%20type%202%20diabetes.''',
@@ -349,7 +349,7 @@ risk_suggestions = {
                     ),
                     html.Br(),
                     html.A(
-                        "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4626000/",
+                        "Increasing Physical Activity (Research Paper) - NCBI/NLM'NIH",
                         href='https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4626000/',
                         target="_blank"
                     ),
@@ -379,13 +379,13 @@ risk_suggestions = {
                                 [
                                     'Useful Links', html.Br(),
                                     html.A(
-                                        "https://www.cdc.gov/dhdsp/pubs/docs/sib_heartbeat.pdf",
+                                        "Obesity and Cardiovascular Risk (Research Paper) - CDC",
                                         href='https://www.cdc.gov/dhdsp/pubs/docs/sib_heartbeat.pdf',
                                         target="_blank"
                                     ),
                                     html.Br(),
                                     html.A(
-                                        "https://www.cdc.gov/obesity/index.html",
+                                        "Overweight & Obesity (Landing Page) - CDC",
                                         href='https://www.cdc.gov/obesity/index.html',
                                         target="_blank"
                                     ),
