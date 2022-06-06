@@ -61,7 +61,23 @@ def user_dropdown_template(
     )
 
 
-def user_age(div_className: str):
+def user_age(div_className: str) -> html.Div:
+    """Input section for age.
+
+    Parameters
+    ----------
+    div_className : str
+        className attribute of template Div.
+
+    Returns
+    -------
+    html.Div
+
+    See Also
+    --------
+    user_input_template
+    """
+
     return user_input_template(
         div_className,
         'Age',
@@ -73,7 +89,23 @@ def user_age(div_className: str):
     )
 
 
-def user_gender(div_className: str):
+def user_gender(div_className: str) -> html.Div:
+    """Dropdown selection for gender.
+
+    Parameters
+    ----------
+    div_className : str
+        className attribute of template Div.
+
+    Returns
+    -------
+    html.Div
+
+    See Also
+    --------
+    user_dropdown_template
+    """
+
     return user_dropdown_template(
         div_className,
         'Gender',
@@ -82,7 +114,23 @@ def user_gender(div_className: str):
     )
 
 
-def user_height(div_className: str):
+def user_height(div_className: str) -> html.Div:
+    """Input section for height.
+
+    Parameters
+    ----------
+    div_className : str
+        className attribute of template Div.
+
+    Returns
+    -------
+    html.Div
+
+    See Also
+    --------
+    user_input_template
+    """
+
     return user_input_template(
         div_className,
         'Height (Inches)',
@@ -94,7 +142,23 @@ def user_height(div_className: str):
     )
 
 
-def user_weight(div_className: str):
+def user_weight(div_className: str) -> html.Div:
+    """Input section for weight.
+
+    Parameters
+    ----------
+    div_className : str
+        className attribute of template Div.
+
+    Returns
+    -------
+    html.Div
+
+    See Also
+    --------
+    user_input_template
+    """
+
     return user_input_template(
         div_className,
         'Weight (Pounds)',
@@ -106,7 +170,23 @@ def user_weight(div_className: str):
     )
 
 
-def user_smoke(div_className: str):
+def user_smoke(div_className: str) -> html.Div:
+    """Dropdown selection for smoking status.
+
+    Parameters
+    ----------
+    div_className : str
+        className attribute of template Div.
+
+    Returns
+    -------
+    html.Div
+
+    See Also
+    --------
+    user_dropdown_template
+    """
+
     return user_dropdown_template(
         div_className,
         'Do you smoke?',
@@ -115,7 +195,23 @@ def user_smoke(div_className: str):
     )
 
 
-def user_drink(div_className: str):
+def user_drink(div_className: str) -> html.Div:
+    """Dropdown selection for drinkning status.
+
+    Parameters
+    ----------
+    div_className : str
+        className attribute of template Div.
+
+    Returns
+    -------
+    html.Div
+
+    See Also
+    --------
+    user_dropdown_template
+    """
+
     return user_dropdown_template(
         div_className,
         'Do you drink?',
@@ -124,7 +220,23 @@ def user_drink(div_className: str):
     )
 
 
-def user_exercise(div_className: str):
+def user_exercise(div_className: str) -> html.Div:
+    """Dropdown selection for activity status.
+
+    Parameters
+    ----------
+    div_className : str
+        className attribute of template Div.
+
+    Returns
+    -------
+    html.Div
+
+    See Also
+    --------
+    user_download_template
+    """
+
     return user_dropdown_template(
         div_className,
         'Do you exercise regularly?',
@@ -133,7 +245,23 @@ def user_exercise(div_className: str):
     )
 
 
-def user_low_bp(div_className: str):
+def user_low_bp(div_className: str) -> html.Div:
+    """Input section for low blood pressure level.
+
+    Parameters
+    ----------
+    div_className : str
+        className attribute of template Div.
+
+    Returns
+    -------
+    html.Div
+
+    See Also
+    --------
+    user_input_template
+    """
+
     return user_input_template(
         div_className,
         'Low BP level',
@@ -145,7 +273,23 @@ def user_low_bp(div_className: str):
     )
 
 
-def user_high_bp(div_className: str):
+def user_high_bp(div_className: str) -> html.Div:
+    """Input section for high blood pressure level.
+
+    Parameters
+    ----------
+    div_className : str
+        className attribute of template Div.
+
+    Returns
+    -------
+    html.Div
+
+    See Also
+    --------
+    user_input_template
+    """
+
     return user_input_template(
         div_className,
         'High BP level',
@@ -157,7 +301,23 @@ def user_high_bp(div_className: str):
     )
 
 
-def user_cholesterol(div_className: str):
+def user_cholesterol(div_className: str) -> html.Div:
+    """Dropdown selection for cholesterol level.
+
+    Parameters
+    ----------
+    div_className : str
+        className attribute of template Div.
+
+    Returns
+    -------
+    html.Div
+
+    See Also
+    --------
+    user_download_template
+    """
+
     return user_dropdown_template(
         div_className,
         'Cholesterol level',
@@ -170,7 +330,23 @@ def user_cholesterol(div_className: str):
     )
 
 
-def user_glucose(div_className: str):
+def user_glucose(div_className: str) -> html.Div:
+    """Dropdown selection for glucose level.
+
+    Parameters
+    ----------
+    div_className : str
+        className attribute of template Div.
+
+    Returns
+    -------
+    html.Div
+
+    See Also
+    --------
+    user_dropdown_template
+    """
+
     return user_dropdown_template(
         div_className,
         'Glucose level',
