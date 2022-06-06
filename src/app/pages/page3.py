@@ -1,11 +1,9 @@
-from dash import dcc, html, Input, Output, callback
 import pickle
-from utils.defaults import gender_options
+
+from dash import Input, Output, callback, dcc, html
+from utils import data_options, disclaimer
 from utils.validation import _convert_imp_metr_height, _convert_imp_metr_weight
 
-
-yes_no_options = {0: 'Yes', 1: 'No'}
-yes_no_option_exercise = {1: 'Yes', 0: 'No'}
 header_style = {
     "padding": "25px",
     "text-align": "center",
@@ -14,173 +12,47 @@ header_style = {
     "font-size": "xx-large",
 }
 
-disclaimer_text = "We do not claim to be medical professionals. Please consult your healthcare supervisor before taking action on any advice or results."
-
-disclaimer_style = {
-    'position': 'absolute',
-    'width': '36%',
-    'height': '10%',
-    'opacity': '0.9',
-    'left': '64%'
-}
+div_className = 'app-controls-block'
 
 layout = html.Div(
     children=html.Div(
         children=[
             html.H1("Risk Evaluator - Detailed", style=header_style),
             html.Div(
-                children=[html.P(disclaimer_text, style=disclaimer_style)]
+                children=[
+                    html.P(
+                        disclaimer.disclaimer_text,
+                        style=disclaimer.disclaimer_style
+                    )
+                ]
             ),
             html.Div(
                 className='HeartBeat',
                 style={'top': '61%', 'left': '8%'},
                 children=[
-                    html.Div(
-                        className='app-controls-block',
-                        children=[
-                            html.P("Age"),
-                            dcc.Input(
-                                className='app-input',
-                                id='age',
-                                type='number',
-                                min=18,
-                                step=1
-                            )
-                        ]
-                    ),
-                    html.Div(
-                        className='app-controls-block',
-                        children=[
-                            html.P("Gender", ),
-                            dcc.Dropdown(
-                                id='genderdrop',
-                                options=gender_options
-                            )
-                        ]
-                    ),
-                    html.Div(
-                        className='app-controls-block',
-                        children=[
-                            html.P("Height (Inches)"),
-                            dcc.Input(
-                                className='app-input',
-                                id='height',
-                                type='number',
-                                min=0,
-                                step=0.1
-                            )
-                        ]
-                    ),
-                    html.Div(
-                        className='app-controls-block',
-                        children=[
-                            html.P("Weight (Pounds)"),
-                            dcc.Input(
-                                className='app-input',
-                                id='weight',
-                                type='number',
-                                min=0,
-                                step=1
-                            )
-                        ]
-                    )
+                    data_options.user_age(div_className),
+                    data_options.user_gender(div_className),
+                    data_options.user_height(div_className),
+                    data_options.user_weight(div_className)
                 ]
             ),
             html.Div(
                 className='HeartBeat',
                 style={'top': '61%', 'left': '33%'},
                 children=[
-                    html.Div(
-                        className='app-controls-block',
-                        children=[
-                            html.P("Do you Smoke?", ),
-                            dcc.Dropdown(
-                                id='smoke',
-                                options=yes_no_options
-                            )
-                        ]
-                    ),
-                    html.Div(
-                        className='app-controls-block',
-                        children=[
-                            html.P("Do you Drink?", ),
-                            dcc.Dropdown(
-                                id='drink',
-                                options=yes_no_options
-                            )
-                        ]
-                    ),
-                    html.Div(
-                        className='app-controls-block',
-                        children=[
-                            html.P("Low BP level", ),
-                            dcc.Input(
-                                className='app-input',
-                                id='lowbp',
-                                type='number',
-                                min=20,
-                                step=1
-                            )
-                        ]
-                    ),
-                    html.Div(
-                        className='app-controls-block',
-                        children=[
-                            html.P("High BP level", ),
-                            dcc.Input(
-                                className='app-input',
-                                id='highbp',
-                                type='number',
-                                min=50,
-                                step=1
-                            )
-                        ]
-                    )
+                    data_options.user_smoke(div_className),
+                    data_options.user_drink(div_className),
+                    data_options.user_low_bp(div_className),
+                    data_options.user_high_bp(div_className)
                 ]
             ),
             html.Div(
                 className='HeartBeat',
                 style={'top': '49%', 'left': '53%'},
                 children=[
-                    html.Div(
-                        className='app-controls-block',
-                        children=[
-                            html.P("Do you Exercise Regularly?", ),
-                            dcc.Dropdown(
-                                id='exercise',
-                                options=yes_no_option_exercise
-                            )
-                        ]
-                    ),
-                    html.Div(
-                        className='app-controls-block',
-                        children=[
-                            html.P("Cholestrol level", ),
-                            dcc.Dropdown(
-                                id='cholestrol',
-                                options=[
-                                    'Normal(<200mg/dL)',
-                                    'Above Normal(200~239mg/dL)',
-                                    'Abnormal(>240mg/dL)'
-                                ]
-                            )
-                        ]
-                    ),
-                    html.Div(
-                        className='app-controls-block',
-                        children=[
-                            html.P("Glucose level", ),
-                            dcc.Dropdown(
-                                className='app-input',
-                                id='glucose',
-                                options=[
-                                    'Normal(<99mg/dL)',
-                                    'Above Normal(100~125mg/dL)',
-                                    'Abnormal (>126mg/dL)'
-                                ]
-                            )
-                        ]
-                    )
+                    data_options.user_exercise(div_className),
+                    data_options.user_cholesterol(div_className),
+                    data_options.user_glucose(div_className)
                 ]
             ),
             html.Div(

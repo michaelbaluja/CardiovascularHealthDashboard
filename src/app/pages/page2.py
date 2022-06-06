@@ -1,9 +1,10 @@
-from dash import Dash, html, dcc, Input, Output, callback
-import plotly.express as px
-import pandas as pd
-from urllib.request import urlopen
 import json
+from urllib.request import urlopen
+
+import pandas as pd
+import plotly.express as px
 import plotly.graph_objects as go
+from dash import Dash, Input, Output, callback, dcc, html
 from sklearn.feature_selection import SelectKBest, chi2
 
 header_style = {
@@ -17,12 +18,14 @@ header_style = {
 app = Dash(__name__)
 # 1
 
-CATEGORICAL_COLUMNS = ['gender', 'High cholesterol',
-                       'smoke', 'alco', 'active', 'High glucose']
-
 
 def get_categorical_table() -> pd.DataFrame:
-    """Returns a section of the table with categorical variables only
+    """Retrieve categorical risk factors from dataset.
+
+    Parameters
+    ----------
+    df : pandas.DataFrame
+
     Returns
     -------
     pandas.DataFrame
@@ -38,31 +41,39 @@ def get_categorical_table() -> pd.DataFrame:
     res = pd.concat([res, dummies], axis=1)
     res = res.drop(['gluc', 'gluc_1', 'gluc_3'], axis=1)
     res = res.rename(columns={"gluc_2": "High glucose"})
-    return res[[*CATEGORICAL_COLUMNS, 'cardio']]
+    return res[[*get_dropdown_options(), 'cardio']]
 
 
 df = get_categorical_table()
 
 
 def get_dropdown_options():
-    """Returns all the varibles to populate the dropdown
+    """Get dataset columns associated with risk factors.
+
     Returns
     -------
     list(str)
     """
-    return CATEGORICAL_COLUMNS
+
+    return [
+        'gender', 'High cholesterol', 'smoke', 'alco', 'active', 'High glucose'
+    ]
 
 
 def compute_importance(x_vars) -> list:
-    """Computes the importance score using the chi-squared statistic
-    Input
-    -------
-    x_vars : list of fields for which the importance is computed
-    y : Dependent variable
+    """Computes the importance score using the chi-squared statistic.
+
+    Parameters
+    ----------
+    x_vars : list of str
+        Columns of which to calculate importance.
+
     Returns
     -------
-    list: importance scores for each x with respect to y
+    fs.scores_ : list
+        Importance scores for each x with respect to cardio.
     """
+
     assert isinstance(x_vars, list)
     assert all([(isinstance(x, str) and x in df.columns) for x in x_vars])
 
