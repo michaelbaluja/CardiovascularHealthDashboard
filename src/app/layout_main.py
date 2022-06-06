@@ -6,8 +6,7 @@ from dash import html
 def run_standalone_app(
         layout,
         callbacks,
-        header_colors,
-        filename
+        header_colors
 ):
     """Run demo app (tests/dashbio_demos/*/app.py) as standalone app."""
     app = dash.Dash(__name__)
@@ -29,13 +28,12 @@ def run_standalone_app(
     return app
 
 
-def app_page_layout(page_layout,
-                    app_title="Caridiovascular Disease Analysis",
-                    app_name="",
-                    light_logo=True,
-                    standalone=False,
-                    bg_color="#506784",
-                    font_color="#F3F6FA"):
+def app_page_layout(
+        page_layout,
+        app_title="Caridiovascular Disease Analysis",
+        bg_color="#506784",
+        font_color="#F3F6FA"
+):
     return html.Div(
         id='main_page',
         children=[

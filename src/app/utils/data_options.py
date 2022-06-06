@@ -8,6 +8,50 @@ def user_input_template(
         p_text: str,
         **dropdown_kwargs: dict
 ) -> html.Div:
+    """Template for user input field.
+
+    Parameters
+    ----------
+    cn : str
+        className for html.Div object.
+    p_text : str
+        Input paragraph text.
+
+    Returns
+    -------
+    html.Div
+        Element containing paragraph titling and input field.
+    """
+
+    return html.Div(
+        className=cn,
+        children=[
+            html.P(p_text),
+            dcc.Input(**dropdown_kwargs)
+        ]
+    )
+
+
+def user_dropdown_template(
+        cn: str,
+        p_text: str,
+        **dropdown_kwargs: dict
+) -> html.Div:
+    """Template for user input dropdown.
+
+    Parameters
+    ----------
+    cn : str
+        className for html.Div object.
+    p_text : str
+        Input paragraph text.
+
+    Returns
+    -------
+    html.Div
+        Element containing paragraph titling and input dropdown.
+    """
+
     return html.Div(
         className=cn,
         children=[
@@ -30,7 +74,7 @@ def user_age(div_className: str):
 
 
 def user_gender(div_className: str):
-    return user_input_template(
+    return user_dropdown_template(
         div_className,
         'Gender',
         id='genderdrop',
@@ -63,7 +107,7 @@ def user_weight(div_className: str):
 
 
 def user_smoke(div_className: str):
-    return user_input_template(
+    return user_dropdown_template(
         div_className,
         'Do you smoke?',
         id='smoke',
@@ -72,7 +116,7 @@ def user_smoke(div_className: str):
 
 
 def user_drink(div_className: str):
-    return user_input_template(
+    return user_dropdown_template(
         div_className,
         'Do you drink?',
         id='drink',
@@ -81,7 +125,7 @@ def user_drink(div_className: str):
 
 
 def user_exercise(div_className: str):
-    return user_input_template(
+    return user_dropdown_template(
         div_className,
         'Do you exercise regularly?',
         id='exercise',
@@ -114,7 +158,7 @@ def user_high_bp(div_className: str):
 
 
 def user_cholesterol(div_className: str):
-    return user_input_template(
+    return user_dropdown_template(
         div_className,
         'Cholesterol level',
         id='cholesterol',
@@ -127,7 +171,7 @@ def user_cholesterol(div_className: str):
 
 
 def user_glucose(div_className: str):
-    return user_input_template(
+    return user_dropdown_template(
         div_className,
         'Glucose level',
         className='app-input',
