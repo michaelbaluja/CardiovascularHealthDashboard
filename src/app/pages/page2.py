@@ -1,4 +1,5 @@
 import json
+from collections.abc import Collection
 from urllib.request import urlopen
 
 import pandas as pd
@@ -44,15 +45,12 @@ def get_categorical_table() -> pd.DataFrame:
     return res[[*get_dropdown_options(), 'cardio']]
 
 
-df = get_categorical_table()
-
-
 def get_dropdown_options():
     """Get dataset columns associated with risk factors.
 
     Returns
     -------
-    list(str)
+    list of str
     """
 
     return [
@@ -60,7 +58,10 @@ def get_dropdown_options():
     ]
 
 
-def compute_importance(x_vars) -> list:
+df = get_categorical_table()
+
+
+def compute_importance(x_vars: list[str]) -> list:
     """Computes the importance score using the chi-squared statistic.
 
     Parameters
@@ -523,8 +524,19 @@ layout = html.Div(
     Output('corr-plot', 'figure'),
     Input('corr-factors', 'value')
 )
-def correlation_plot(cols):
-    """Correlation between selected factors and cardiovascular disease risk."""
+def correlation_plot(cols: Collection[str]):
+    """Correlation between selected factors and cardiovascular disease risk.
+
+    Parameters
+    ----------
+    cols : list-like of str
+        Factors of which to plot correlation against cardiovascular disease.
+
+    Returns
+    -------
+    px.bar
+        Barchart with correlation values.
+    """
 
     return px.bar(
         x=cols,
@@ -540,7 +552,18 @@ def correlation_plot(cols):
     Output('suggestions', 'children'),
     Input('risk_factors', 'value')
 )
-def give_suggestions(factors):
+def give_suggestions(factors: Collection[str]):
+    """Retrieve suggestions for risk factors.
+
+    Parameters
+    ----------
+    factors : list-like of str
+        Risk factors of interest.
+
+    Returns
+    -------
+    list
+    """
     return risk_suggestions[factors]
 
 

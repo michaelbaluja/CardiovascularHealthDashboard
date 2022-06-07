@@ -1,5 +1,6 @@
 import pandas as pd
 import plotly.express as px
+from plotly.graph_objects import Figure
 from utils.validation import _zip_to_county
 from uszipcode import SearchEngine
 
@@ -7,21 +8,21 @@ DF_100K_FILEPATH = '../../data/trends_by_100k.csv'
 HOSPITAL_DF_PATH = '../../data/us_hospital_locations.csv'
 
 df_100k = pd.read_csv(DF_100K_FILEPATH)
-hosp_df = pd.read_csv(HOSPITAL_DF_PATH)
+hosp_df = pd.read_csv(HOSPITAL_DF_PATH, dtype={'ZIP': str})
 
 
-def get_all_zips():
+def get_all_zips() -> list[str]:
     """Returns all the zip codes in the database.
 
     Returns
     -------
-    (list :  list of zip codes)
+    list of str
     """
 
     return hosp_df['ZIP'].unique()
 
 
-def get_age_statistics(zip: str):
+def get_age_statistics(zip: str) -> Figure:
     """Generates the plot with age related statistics.
 
     Parameters
@@ -33,7 +34,7 @@ def get_age_statistics(zip: str):
 
     Returns
     -------
-    (px plot :  plot with age related statistics)
+    fig : plotly.graph_objects.Figure
     """
 
     assert isinstance(zip, str) and all(num.isdigit()for num in zip), \
@@ -61,7 +62,7 @@ def get_age_statistics(zip: str):
     return fig
 
 
-def get_trend_statistics(zip: str):
+def get_trend_statistics(zip: str) -> Figure:
     """Generates trend plot showing trend from 1999-2018 for age groups.
 
     Parameters
@@ -71,7 +72,7 @@ def get_trend_statistics(zip: str):
 
     Returns
     -------
-    (px plot :  trend plot)
+    fig : plotly.graph_objects.Figure
     """
 
     county_name = _zip_to_county(zip)
@@ -96,7 +97,7 @@ def get_trend_statistics(zip: str):
     return fig
 
 
-def get_hospital_data(zip: str):
+def get_hospital_data(zip: str) -> Figure:
     """Generates a map with hospital information for the given zip code.
 
     Parameters
@@ -106,7 +107,7 @@ def get_hospital_data(zip: str):
 
     Returns
     -------
-    (px scatter mapbox :  map plot)
+    fig : plotly.graph_objects.Figure
     """
 
     engine = SearchEngine()

@@ -3,6 +3,7 @@ from dash import html, dcc, callback
 import json
 from urllib.request import urlopen
 import cdc_plots
+from plotly.graph_objects import Figure
 
 # 1
 with urlopen('https://raw.githubusercontent.com/plotly/datasets/master/geojson-counties-fips.json') as response:
@@ -86,23 +87,59 @@ layout = html.Div(
 
 @callback(
     Output('mort-county', 'figure'),
-    Input('zip-select', 'value'), prevent_initial_call=True
+    Input('zip-select', 'value'),
+    prevent_initial_call=True
 )
-def age_plot(zip: int):
-    return cdc_plots.get_age_statistics(str(zip))
+def age_plot(zip: str) -> Figure:
+    """Callback wrapper for age statistics.
+
+    Parameters
+    ----------
+    zip : str
+
+    See Also
+    --------
+    cdc_plots.get_age_statistics
+    """
+
+    return cdc_plots.get_age_statistics(zip)
 
 
 @callback(
     Output('mort-trend', 'figure'),
-    Input('zip-select', 'value'), prevent_initial_call=True
+    Input('zip-select', 'value'),
+    prevent_initial_call=True
 )
-def trend_plot(zip: int):
-    return cdc_plots.get_trend_statistics(str(zip))
+def trend_plot(zip: str) -> Figure:
+    """Callback wrapper for age statistics according to trends.
+
+    Parameters
+    ----------
+    zip : str
+
+    See Also
+    --------
+    cdc_plots.get_trend_statistics
+    """
+
+    return cdc_plots.get_trend_statistics(zip)
 
 
 @callback(
     Output('hosp-map', 'figure'),
-    Input('zip-select', 'value'), prevent_initial_call=True
+    Input('zip-select', 'value'),
+    prevent_initial_call=True
 )
-def map_plot(zip: int):
-    return cdc_plots.get_hospital_data(str(zip))
+def map_plot(zip: int) -> Figure:
+    """Callback wrapper for hospital generation map.
+
+    Parameters
+    ----------
+    zip : str
+
+    See Also
+    --------
+    cdc_plots.get_hopsital_data
+    """
+
+    return cdc_plots.get_hospital_data(zip)
