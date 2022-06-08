@@ -24,11 +24,9 @@ pip install -r requirements.txt
 ```
 
 ### Use
-To launch the dashboard application, launch the `app.py` file from the `src/app` directory.
+To launch the dashboard application, launch the `app.py` file from the root directory.
 The application includes a `--debug` argument for running the application in debug mode.
 ```bash
-cd src/app
-
 python app.py # for running without debug mode
 python app.py --debug # for running in debug mode
 ```
@@ -40,13 +38,8 @@ the address in your web browser to load the dashboard.
 The full documentation for the dashboard is available on [Read the Docs](https://cardiovascular-health-dashboard.readthedocs.io/en/latest/)
 
 ## Testing
-To test the program, navigate to the root of the repository and run the following:
+To test the program and view the coverage report, navigate to the root of the 
+repository and run the following:
 ```bash
-pytest -v
-```
-Where the optional `-v` flag will provide information about individual tests.
-
-To view the code coverage report, navigate to the root of the repository run the following:
-```bash
-coverage report
+python -m pytest -v --cov=. --cov-report html
 ```
