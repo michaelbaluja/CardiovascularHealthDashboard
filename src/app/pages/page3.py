@@ -1,8 +1,8 @@
 import pickle
 
 from dash import Input, Output, callback, dcc, html
-from utils import data_options, disclaimer
-from utils.validation import _convert_imp_metr_height, _convert_imp_metr_weight
+from src.app.utils import data_options, disclaimer, validation
+
 
 header_style = {
     "padding": "25px",
@@ -152,8 +152,8 @@ def predict(
         Percent prediction of heart complication via high-data model.
     """
 
-    height = _convert_imp_metr_height(height)
-    weight = _convert_imp_metr_weight(weight)
+    height = validation._convert_imp_metr_height(height)
+    weight = validation._convert_imp_metr_weight(weight)
 
     model_params = [
         gender, height, weight, highbp, lowbp, cholestrol, glucose, smoke,

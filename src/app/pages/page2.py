@@ -1,6 +1,8 @@
 import json
 from collections.abc import Collection
+from typing import Any
 from urllib.request import urlopen
+from src.app.data import datasets
 
 import pandas as pd
 import plotly.express as px
@@ -20,23 +22,20 @@ app = Dash(__name__)
 # 1
 
 
-def get_categorical_table() -> pd.DataFrame:
+def get_categorical_table(df) -> pd.DataFrame:
     """Retrieve categorical risk factors from dataset.
-
-    Parameters
-    ----------
-    df : pandas.DataFrame
 
     Returns
     -------
     pandas.DataFrame
     """
 
-    # read the kaggle dataset
-    df = pd.read_csv('../../data/kaggle_cleaned.csv')
     dummies = pd.get_dummies(df['cholesterol'], prefix='cholesterol')
     res = pd.concat([df, dummies], axis=1)
-    res = res.drop(['cholesterol', 'cholesterol_1', 'cholesterol_3'], axis=1)
+    res = res.drop(
+        ['cholesterol', 'cholesterol_1', 'cholesterol_3'],
+        axis=1
+    )
     res = res.rename(columns={"cholesterol_2": "High cholesterol"})
     dummies = pd.get_dummies(df['gluc'], prefix='gluc')
     res = pd.concat([res, dummies], axis=1)
@@ -58,10 +57,7 @@ def get_dropdown_options():
     ]
 
 
-df = get_categorical_table()
-
-
-def compute_importance(x_vars: list[str]) -> list:
+def compute_importance(df: pd.DataFrame, x_vars: list[str]) -> list:
     """Computes the importance score using the chi-squared statistic.
 
     Parameters
@@ -91,7 +87,7 @@ with urlopen('https://raw.githubusercontent.com/plotly/datasets/master/geojson-c
     counties = json.load(response)
 
 # data
-dataset1 = pd.read_csv("../../data/Kagglecleaned3.csv")
+dataset1 = datasets.Kaggle3Dataset().data
 dataset1.loc[dataset1['cardio'] == 0, 'cardio'] = 'No heart condition'
 dataset1.loc[dataset1['cardio'] == 1, 'cardio'] = 'Heart condition'
 dataset1.rename(columns={'ap_hi': 'systolic pressure',
@@ -99,7 +95,7 @@ dataset1.rename(columns={'ap_hi': 'systolic pressure',
 dataset1.loc[dataset1['active'] == 0, 'active'] = 'Regular Exercise'
 dataset1.loc[dataset1['active'] == 1, 'active'] = 'Lack of Exercise'
 
-dataset2 = pd.read_csv('../../data/kaggle_cleaned.csv')  # for easy use
+dataset2 = datasets.KaggleDataset().data
 dataset2.loc[dataset2['cardio'] == 0, 'cardio'] = 'No heart condition'
 dataset2.loc[dataset2['cardio'] == 1, 'cardio'] = 'Heart condition'
 dataset2.loc[dataset2['cholesterol'] == 1,
@@ -524,7 +520,7 @@ layout = html.Div(
     Output('corr-plot', 'figure'),
     Input('corr-factors', 'value')
 )
-def correlation_plot(cols: Collection[str]):
+def correlation_plot(cols: Collection[str]) -> go.Figure:
     """Correlation between selected factors and cardiovascular disease risk.
 
     Parameters
@@ -538,9 +534,11 @@ def correlation_plot(cols: Collection[str]):
         Barchart with correlation values.
     """
 
+    dataset = datasets.KaggleDataset()
+
     return px.bar(
         x=cols,
-        y=compute_importance(cols),
+        y=compute_importance(dataset.data, cols),
         title='Correlation',
         labels={'x': 'Risk Factors', 'y': 'Correlation'}
     )
@@ -552,7 +550,7 @@ def correlation_plot(cols: Collection[str]):
     Output('suggestions', 'children'),
     Input('risk_factors', 'value')
 )
-def give_suggestions(factors: Collection[str]):
+def give_suggestions(factors: Collection[str]) -> Any:
     """Retrieve suggestions for risk factors.
 
     Parameters

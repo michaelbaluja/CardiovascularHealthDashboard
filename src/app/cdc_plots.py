@@ -1,14 +1,15 @@
 import pandas as pd
 import plotly.express as px
 from plotly.graph_objects import Figure
-from utils.validation import _zip_to_county
+from src.app.utils import validation
+from src.app.data import datasets
 from uszipcode import SearchEngine
 
 DF_100K_FILEPATH = '../../data/trends_by_100k.csv'
 HOSPITAL_DF_PATH = '../../data/us_hospital_locations.csv'
 
-df_100k = pd.read_csv(DF_100K_FILEPATH)
-hosp_df = pd.read_csv(HOSPITAL_DF_PATH, dtype={'ZIP': str})
+df_100k = datasets.Trends100Dataset().data
+hosp_df = datasets.HospitalDataset().data
 
 
 def get_all_zips() -> list[str]:
@@ -40,7 +41,7 @@ def get_age_statistics(zip: str) -> Figure:
     assert isinstance(zip, str) and all(num.isdigit()for num in zip), \
         'Zip must be a represented as numerical string.'
 
-    county_name = _zip_to_county(zip)
+    county_name = validation._zip_to_county(zip)
     if county_name.rsplit(' ', 1)[-1] == 'County':
         county_name = county_name.rsplit(' ', 1)[0]
     county_df = df_100k[df_100k['County'] == county_name]\
@@ -75,7 +76,7 @@ def get_trend_statistics(zip: str) -> Figure:
     fig : plotly.graph_objects.Figure
     """
 
-    county_name = _zip_to_county(zip)
+    county_name = validation._zip_to_county(zip)
     if county_name.rsplit(' ', 1)[-1] == 'County':
         county_name = county_name.rsplit(' ', 1)[0]
     county_df = df_100k[

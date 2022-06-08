@@ -2,7 +2,7 @@ from dash.dependencies import Input, Output
 from dash import html, dcc, callback
 import json
 from urllib.request import urlopen
-import cdc_plots
+from src.app import cdc_plots
 from plotly.graph_objects import Figure
 
 # 1
