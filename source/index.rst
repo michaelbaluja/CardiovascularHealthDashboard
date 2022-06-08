@@ -24,6 +24,9 @@ All Code is available via the project repository on `GitHub <https://github.com/
    :caption: Contents:
    
    validation
+   pages
+   plots
+   layout
 
 
 Content Directory

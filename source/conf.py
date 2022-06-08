@@ -13,7 +13,7 @@
 import os
 import sys
 #sys.path.insert(1, os.path.abspath('../'))
-sys.path.insert(0, os.path.abspath('../src/app/'))
+sys.path.insert(0, os.path.abspath('../'))
 
 
 # -- Project information -----------------------------------------------------
@@ -56,4 +56,4 @@ html_theme = 'alabaster'
 html_static_path = []
 
 # -- Environment mock --------------------------------------------------------
-autodoc_mock_imports = ['uszipcode', 'src.app.utils']
+autodoc_mock_imports = ['uszipcode']

@@ -2,6 +2,6 @@
 User Input Validation
 =====================
 
-.. automodule:: utils.validation
+.. automodule:: src.app.utils.validation
     :members:
     :private-members:
