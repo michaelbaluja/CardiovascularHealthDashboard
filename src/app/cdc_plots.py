@@ -24,7 +24,10 @@ def get_all_zips() -> list[str]:
 
 
 def get_age_statistics(zip: str) -> Figure:
-    """Generates the plot with age related statistics.
+    """Generates the plot with number of mortalities from 1999-2018 (combined), 
+    categorized by age group and type of heart disease.
+
+    Source - Rates and Trends in Coronary Heart Disease and Stroke by CDC
 
     Parameters
     ----------
@@ -64,7 +67,10 @@ def get_age_statistics(zip: str) -> Figure:
 
 
 def get_trend_statistics(zip: str) -> Figure:
-    """Generates trend plot showing trend from 1999-2018 for age groups.
+    """Generates line plot showing cardiovascular disease trend from 1999-2018 for 
+    age groups (35-60 and 60 & above), for a particular zipcode area.
+
+    Source - Rates and Trends in Coronary Heart Disease and Stroke by CDC
 
     Parameters
     ----------
@@ -75,6 +81,8 @@ def get_trend_statistics(zip: str) -> Figure:
     -------
     fig : plotly.graph_objects.Figure
     """
+    assert isinstance(zip, str) and all(num.isdigit()for num in zip), \
+        'Zip must be a represented as numerical string.'
 
     county_name = validation._zip_to_county(zip)
     if county_name.rsplit(' ', 1)[-1] == 'County':
@@ -99,7 +107,7 @@ def get_trend_statistics(zip: str) -> Figure:
 
 
 def get_hospital_data(zip: str) -> Figure:
-    """Generates a map with hospital information for the given zip code.
+    """Generates a map with hospital information for the given zip code. Map overlays from Open Street Map.
 
     Parameters
     ----------
@@ -110,6 +118,8 @@ def get_hospital_data(zip: str) -> Figure:
     -------
     fig : plotly.graph_objects.Figure
     """
+    assert isinstance(zip, str) and all(num.isdigit()for num in zip), \
+        'Zip must be a represented as numerical string.'
 
     engine = SearchEngine()
     zip_obj = engine.by_zipcode(zip)
