@@ -7,5 +7,6 @@ disclaimer_style = {
     'width': '36%',
     'height': '10%',
     'opacity': '0.9',
-    'left': '58%'
+    'left': '63%',
+    'text-align': 'center'
 }
