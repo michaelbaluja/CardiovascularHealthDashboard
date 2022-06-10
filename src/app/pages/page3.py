@@ -163,7 +163,7 @@ def predict(
     if any(map(lambda param: param is None, model_params)):
         result = [[0, 0]]
     else:
-        with open('models/full_finalized_model.sav', 'rb') as model_file:
+        with open('src/app/models/full_finalized_model.sav', 'rb') as model_file:
             model = pickle.load(model_file)
 
         model_params = [

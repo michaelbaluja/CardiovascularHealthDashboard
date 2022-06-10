@@ -1,4 +1,5 @@
 import pickle
+import os
 
 from dash import Input, Output, callback, dcc, html
 from src.app.utils import data_options, disclaimer, validation
@@ -128,7 +129,7 @@ def predict(
     if any(map(lambda param: param is None, model_params)):
         result = [[0, 0]]
     else:
-        with open('models/half_finalized_model.sav', 'rb') as model_file:
+        with open('src/app/models/half_finalized_model.sav', 'rb') as model_file:
             model = pickle.load(model_file)
         model_params = [
             int(gender),
