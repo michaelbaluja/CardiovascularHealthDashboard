@@ -23,7 +23,7 @@ layout = html.Div(
                 children=[
                     html.P(
                         disclaimer.disclaimer_text,
-                        style=disclaimer.disclaimer_style
+                        style=disclaimer.disclaimer_style_1
                     )
                 ]
             ),
