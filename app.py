@@ -68,7 +68,7 @@ index_page = html.Div(
 
 
 @callback(Output('page-content', 'children'), Input('url', 'pathname'))
-def display_page(pathname: str):
+def display_page(pathname: str) -> html.Div:
     """Load requested page.
 
     Parameters
@@ -78,8 +78,8 @@ def display_page(pathname: str):
 
     Returns
     -------
-    _type_
-        _description_
+    dash.html.Div
+        Layout variable of the requested page.
     """
     if pathname == '/page0':
         return pages.page0.layout
