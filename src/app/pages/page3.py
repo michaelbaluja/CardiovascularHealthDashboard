@@ -19,6 +19,7 @@ layout = html.Div(
         children=[
             html.H1("Risk Evaluator - Detailed", style=header_style),
             html.Div(
+                className='disclaimer-3',
                 children=[
                     html.P(
                         disclaimer.disclaimer_text,
@@ -97,7 +98,7 @@ layout = html.Div(
         Input('highbp', 'value'),
         Input('lowbp', 'value'),
         Input('glucose', 'value'),
-        Input('cholestrol', 'value')
+        Input('cholesterol', 'value')
     ]
 )
 def predict(
@@ -111,7 +112,7 @@ def predict(
         highbp=None,
         lowbp=None,
         glucose=None,
-        cholestrol=None
+        cholesterol=None
 ):
     """Predict probability of heart failure via high-data model.
 
@@ -139,7 +140,7 @@ def predict(
             'Abnormal (>126mg/dL)'
     }
         Glucose level.
-    cholestrol : {
+    cholesterol : {
             'Normal(<200mg/dL)',
             'Above Normal(200~239mg/dL)',
             'Abnormal(>240mg/dL)'
@@ -156,7 +157,7 @@ def predict(
     weight = validation._convert_imp_metr_weight(weight)
 
     model_params = [
-        gender, height, weight, highbp, lowbp, cholestrol, glucose, smoke,
+        gender, height, weight, highbp, lowbp, cholesterol, glucose, smoke,
         drink, exercise, age
     ]
 
@@ -169,10 +170,10 @@ def predict(
         model_params = [
             int(gender), height, weight, float(highbp), float(
                 lowbp), int(smoke), int(drink), int(exercise), age,
-            int(cholestrol == 'Normal(<200mg/dL)'), int(cholestrol ==
-                                                        'Above Normal(200~239mg/dL)'),
-            int(cholestrol == 'Abnormal(>240mg/dL)'), int(glucose ==
-                                                          'Normal(<99mg/dL)',),
+            int(cholesterol == 'Normal(<200mg/dL)'), int(cholesterol ==
+                                                         'Above Normal(200~239mg/dL)'),
+            int(cholesterol == 'Abnormal(>240mg/dL)'), int(glucose ==
+                                                           'Normal(<99mg/dL)',),
             int(glucose == 'Above Normal(100~125mg/dL)'), int(glucose ==
                                                               'Abnormal(>126mg/dL)')
         ]

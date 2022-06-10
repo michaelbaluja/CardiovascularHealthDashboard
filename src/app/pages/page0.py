@@ -8,7 +8,7 @@ layout = html.Div(
             className='HeartBeat',
             children=[
                 html.P(
-                    'CAN YOU PROVIDE HIGH BP, LOW BP,CHOLESTROL AND GLUCOSE LEVEL VALUES?',
+                    'CAN YOU PROVIDE HIGH BP, LOW BP,CHOLESTEROL AND GLUCOSE LEVEL VALUES?',
                     style={
                         'text-align': 'center',
                         'color': '#555',
