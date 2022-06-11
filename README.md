@@ -1,6 +1,8 @@
 # CardiovascularHealthDashboard
 The Cardiovascular Health Dashboard is an informative and interactive platform for learning and understanding about heart health. The platform contains visualizations of cardiovascular health correlates and provides resources on lifestyle choices that may lower the risk of cardiovascular-related health issues. 
 
+Link to the dashboard - http://34.221.35.212:8080/
+
 **Disclaimer:** All data, links, and other information on the Cardiovascular Health 
 Dashboard are compiled from external sources. This is not medical advice. 
 Consult a healthcare professional before incorporating any changes into your
